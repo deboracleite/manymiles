@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { useNavigate } from 'react-router-dom';
 import { Container } from "./RegisterVehicleStyle";
 import Header from "../../components/header/Header";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
@@ -28,6 +29,7 @@ const RegisterVehicle = () =>{
       });
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleVehicleTypeChange = (e) => {
         setVehicleType(e.target.value);
@@ -72,6 +74,7 @@ const RegisterVehicle = () =>{
         rentalMonth && formData.append("monthPrice", rentalMonth);
 
         await api.post('/vehicles', formData);
+        navigate('/');
     }
 
 
@@ -79,21 +82,21 @@ const RegisterVehicle = () =>{
         <Header />
         <Container>
             <div className="import-image">
-            <div className="white-square">
-                <div className="dashed-square">
-                    <label htmlFor="file-upload" className="upload">
-                <FileUploadIcon />
-                </label>
-                    <input
-                        type="file"
-                        id="file-upload"
-                        multiple
-                        style={{ display: "none" }}
-                        onChange={handleFileChange}
-                    />
-                </div>
-            </div>
+                <div className="white-square">
+                    <div className="dashed-square">
+                        <label htmlFor="file-upload" className="upload">
+                        <FileUploadIcon />
+                        </label>
+                        <input
+                            type="file"
+                            id="file-upload"
+                            multiple
+                            style={{ display: "none" }}
+                            onChange={handleFileChange}
+                        />
                     </div>
+                </div>
+             </div>
             <div className="vehicle-form">
                 <form onSubmit={handleSubmit}>
                     <h2>Vehicle Information</h2>

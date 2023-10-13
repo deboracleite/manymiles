@@ -14,12 +14,12 @@ routes.post('/users', UserController.store);
 
 routes.post('/sessions', SessionController.store);
 
+routes.get('/vehicles', VehicleController.index);
+
 routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
 
 routes.post('/vehicles', upload.array('files', 5), VehicleController.store);
-
-routes.get('/vehicles', VehicleController.index);
 
 export default routes;

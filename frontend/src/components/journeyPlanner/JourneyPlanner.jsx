@@ -12,12 +12,7 @@ const JourneyPlanner = () => {
     const [isFromDatePickerOpen, setFromDatePickerOpen] = useState(false);
     const [isUntilDatePickerOpen, setUntilDatePickerOpen] = useState(false);
     const [vehicles, setVehicles] = useState([]);
-    useEffect(() => {
-        api.get('/vehicles').then(({data}) => {
-            console.log(data)
-            setVehicles(data);
-        })
-    }, [])
+    
 
     const handleFromDatePickerChange = (date) => {
         setFromDate(date);

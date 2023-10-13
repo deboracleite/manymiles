@@ -5,14 +5,18 @@ display: flex;
 width: 100%;
 background: #d9d6d6;
 padding-top: 2%;
-height: 100vh;
+/* height: 100vh; */
 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-.import-image{
+.import-image {
     width: 50%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 166px;
 }
 
 h2 {
-    font-size: 370%;
+    font-size: 200%;
     margin-bottom: 20px;
     color: #030303;
     margin-top: 5%;
@@ -31,16 +35,13 @@ h2 {
 
 .VehicleType-input{
     margin-bottom: 2%;
-    label {
-        
-    }
     select{
         width: 22%;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 10px;
         height: 50px;
-        font-size: 130%;
+        font-size: 100%;
     }
 }
 
@@ -53,7 +54,7 @@ label {
       text-align: left;
       margin-bottom: 5px;
       color: #030303;
-      font-size: 130%;
+      font-size: 100%;
     }
 .input-container {
     margin-bottom: 15px;
@@ -65,7 +66,7 @@ label {
         border: 1px solid #ccc;
         border-radius: 10px;
         height: 50px;
-        font-size: 130%;
+        font-size: 100%;
     }
   }
 
@@ -73,7 +74,7 @@ label {
     margin-bottom: 2%;
   }
   .title-group {
-    font-size: 130%;
+    font-size: 100%;
     margin-bottom: 5px;
     color: #030303;
     padding-bottom: 2%;
@@ -109,7 +110,7 @@ input[type="checkbox"] {
   margin-top: 4px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  font-size: 130%;
+  font-size: 100%;
 }
 
 .avaliability-inputs{
@@ -131,7 +132,7 @@ input[type="checkbox"] {
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 10px;
-        font-size: 130%;
+        font-size: 100%;
         height: 150px; 
     }
 
@@ -191,18 +192,13 @@ button {
     margin-top: 18px;
     border: none;
     border-radius: 25px;
-    font-size: 130%;
+    font-size: 100%;
     cursor: pointer;
     margin-top: 5%;
+    margin-bottom: 2%;
     
   }
 
-.import-image {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 .white-square {
     background-color: #fff;
@@ -239,6 +235,7 @@ button {
         align-items: center;
         padding: 16px;
         width: 60%;
+        
     }
 }
 

@@ -4,7 +4,7 @@ export const Container = styled.div`
   background: #d9d6d6;
   padding-top: 2%;
   width: 90%;
-  height: 100vh;
+  /* height: 100vh; */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   .journey-planner {
     background-color: #030303;
@@ -34,7 +34,7 @@ export const Container = styled.div`
     padding: 24px 10px;
     display: flex;
     justify-content: space-between;
-    width: 56%;
+    width: 930px;
     margin: 0 auto;
     align-items: center;
     transform: translateY(-64%);
@@ -50,9 +50,9 @@ export const Container = styled.div`
 
   .date-input-field label {
     color: #030303;
-    font-size: 130%;
+    font-size: 100%;
     text-align: left;
-    padding-left: 19.5%;
+    padding-left: 7.5%;
     
 
   }
@@ -70,10 +70,10 @@ export const Container = styled.div`
         padding-bottom: 2%;
     }
     input{
-      width: 25%;
+      width: 150px;
       border: none;
       border-radius: 10px;
-      font-size: 136%;
+      font-size: 100%;
     }
 
   }
