@@ -49,6 +49,14 @@ class VehicleController {
 
     return res.json(formatGetVehicle(vehicles));
   }
+ 
+  async fetchDetails(req,res){
+    //const {vehicleId}=req.body;
+    const vehicles=await Vehicle.findById(req.params.id);
+//    res.send(data:vehicles);
+    res.json(vehicles)
+    console.log(vehicles);
+  } 
 }
 
 export default new VehicleController();

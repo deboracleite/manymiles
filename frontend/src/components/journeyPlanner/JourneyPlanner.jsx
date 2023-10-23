@@ -23,7 +23,7 @@ const JourneyPlanner = () => {
         setUntilDate(date);
         setUntilDatePickerOpen(false);
     };
-
+    
     return (
         <Container>
             <div className="journey-planner">
@@ -43,7 +43,7 @@ const JourneyPlanner = () => {
                             calendarClassName="datepicker-calendar"
                             className="datepicker"
                         /> */}
-                        <input type="date" placeholder="" />
+                        <input type="date" placeholder="" onSelect={(e)=>setFromDate(e.target.value)}/>
                         {/* <KeyboardArrowDownIcon onClick={() => setFromDatePickerOpen(!isFromDatePickerOpen)} /> */}
                         <input type="time" placeholder="Select time" className="timepicker" />
                     </div>
@@ -61,13 +61,14 @@ const JourneyPlanner = () => {
                             className="datepicker"
                         />
                         <KeyboardArrowDownIcon onClick={() => setUntilDatePickerOpen(!isUntilDatePickerOpen)} /> */}
-                        <input type="date" placeholder="+1" />
+                        <input type="date" placeholder="+1" onSelect={(e)=>setUntilDate(e.target.value)}/>
                         <input type="time" placeholder="Select time" className="timepicker" />
                     </div>
                 </div>
-                <div className="search-icon">
-                    <SearchIcon />
+                <div className="search-icon" onClick={handleSubmit}>
+                    <SearchIcon/>
                 </div>
+                
             </div>
         </Container>
     );

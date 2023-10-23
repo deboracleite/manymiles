@@ -20,6 +20,7 @@ const VehicleFeed = () =>{
                 {vehicleList.map(vehicle => (<VehicleCard key={vehicle.id} className="vehicleItem" vehicle={vehicle}
                 />))}
             </ul>
+            
         </Container>
     );
 }

@@ -39,4 +39,7 @@ export const Container = styled.div`
         color: #fff;
     }
 }
+.itemPrice{
+    color: #030303;
+}
 `
