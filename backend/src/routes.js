@@ -22,7 +22,7 @@ routes.put('/users', UserController.update);
 
 routes.post('/vehicles', upload.array('files', 5), VehicleController.store);
 
-routes.post('/search',VehicleController.search);
+
 routes.get('/fetchDetails/:id',VehicleController.fetchDetails);
 
 export default routes;
