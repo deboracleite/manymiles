@@ -5,6 +5,7 @@ import { Container } from "./journeyPlannerStyle";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import api from '../../services/api';
+import { IconButton } from "@mui/material";
 
 const JourneyPlanner = () => {
     const [fromDate, setFromDate] = useState(null);
@@ -23,6 +24,12 @@ const JourneyPlanner = () => {
         setUntilDate(date);
         setUntilDatePickerOpen(false);
     };
+
+    const handleSubmit = async event => {
+        
+        await api.get(`/search`,{fromDate,untilDate});
+    }
+    
     
     return (
         <Container>
@@ -65,8 +72,10 @@ const JourneyPlanner = () => {
                         <input type="time" placeholder="Select time" className="timepicker" />
                     </div>
                 </div>
-                <div className="search-icon" onClick={handleSubmit}>
+                <div className="search-icon" >
+                <IconButton onClick={handleSubmit}>
                     <SearchIcon/>
+                    </IconButton>
                 </div>
                 
             </div>

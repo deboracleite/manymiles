@@ -5,12 +5,15 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import VehicleController from './app/controllers/VehicleController';
 import authMiddleware from './app/middlewares/auth';
+import OwnerController from './app/controllers/OwnerController';
 
 const routes = new Router();
 
 const upload = multer(multerConfig);
 
 routes.post('/users', UserController.store);
+
+routes.post('/owners',OwnerController.store);
 
 routes.post('/sessions', SessionController.store);
 

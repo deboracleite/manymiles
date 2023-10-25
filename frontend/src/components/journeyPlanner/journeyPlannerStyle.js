@@ -108,4 +108,5 @@ export const Container = styled.div`
 .search-icon svg {
   font-size: 30px; /* Ajuste o tamanho do ícone conforme necessário */
 }
+
 `;
