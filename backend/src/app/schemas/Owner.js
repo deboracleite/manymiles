@@ -43,7 +43,7 @@ export const parseOwner = async ownerBody => {
   };
 };
 
-export const validateUserPassword = (password, password_hash) => {
+export const validateOwnerPassword = (password, password_hash) => {
   return bcrypt.compare(password, password_hash);
 };
 

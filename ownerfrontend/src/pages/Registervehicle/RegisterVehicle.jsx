@@ -73,7 +73,7 @@ const RegisterVehicle = () =>{
         rentalWeek && formData.append("weekPrice", rentalWeek);
         rentalMonth && formData.append("monthPrice", rentalMonth);
 
-        await api.post('/vehicles', formData);
+        //await api.post('/vehicles', formData);
         navigate('/');
     }
 

@@ -6,6 +6,7 @@ import SessionController from './app/controllers/SessionController';
 import VehicleController from './app/controllers/VehicleController';
 import authMiddleware from './app/middlewares/auth';
 import OwnerController from './app/controllers/OwnerController';
+import SessionControllerOwner from './app/controllers/SessionControllerOwner';
 
 const routes = new Router();
 
@@ -16,6 +17,8 @@ routes.post('/users', UserController.store);
 routes.post('/owners',OwnerController.store);
 
 routes.post('/sessions', SessionController.store);
+
+routes.post('/sessionsOwner',SessionControllerOwner.store);
 
 routes.get('/vehicles', VehicleController.index);
 

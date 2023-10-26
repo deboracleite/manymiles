@@ -6,50 +6,51 @@ const AuthContext = createContext({});
 const AuthProvider = ({ children }) => {
     const [data, setData] = useState(() => {
       const token = localStorage.getItem('@ManyMiles:token');
-      const user = localStorage.getItem('@ManyMiles:user');
+      const owner = localStorage.getItem('@ManyMiles:owner');
   
-      if (token && user) {
+      console.log(token);
+      if (token && owner) {
         api.defaults.headers.authorization = `Bearer ${token}`;
-        return { token, user: JSON.parse(user) };
+        return { token, owner: JSON.parse(owner) };
       }
   
       return {};
     });
     const signIn = useCallback(async ({ email, password }) => {
       const {
-        data: { token, user },
-      } = await api.post('/sessions', {
+        data: { token, owner },
+      } = await api.post('/sessionsOwner', {
         email,
         password,
       });
   
       localStorage.setItem('@ManyMiles:token', token);
-      localStorage.setItem('@ManyMiles:user', JSON.stringify(user));
+      localStorage.setItem('@ManyMiles:user', JSON.stringify(owner));
   
       api.defaults.headers.authorization = `Bearer ${token}`;
   
-      setData({ token, user });
+      setData({ token, owner });
     }, []);
   
     const signOut = useCallback(() => {
       localStorage.removeItem('@ManyMiles:token');
-      localStorage.removeItem('@ManyMiles:user');
+      localStorage.removeItem('@ManyMiles:owner');
       setData({});
     }, []);
   
-    const updateUser = useCallback(
-      (user) => {
-        localStorage.setItem('@ManyMiles:user', JSON.stringify(user));
+    const updateOwner = useCallback(
+      (owner) => {
+        localStorage.setItem('@ManyMiles:owner', JSON.stringify(owner));
         setData({
           token: data.token,
-          user,
+          owner,
         });
       },
       [setData, data.token],
     );
     return (
       <AuthContext.Provider
-        value={{ user: data.user, signIn, signOut, updateUser }}
+        value={{ owner: data.owner, signIn, signOut, updateOwner }}
       >
         {children}
       </AuthContext.Provider>
