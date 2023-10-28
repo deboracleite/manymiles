@@ -7,6 +7,7 @@ import VehicleController from './app/controllers/VehicleController';
 import authMiddleware from './app/middlewares/auth';
 import OwnerController from './app/controllers/OwnerController';
 import SessionControllerOwner from './app/controllers/SessionControllerOwner';
+import RequestController from './app/controllers/RequestController';
 
 const routes = new Router();
 
@@ -28,6 +29,7 @@ routes.put('/users', UserController.update);
 
 routes.post('/vehicles', upload.array('files', 5), VehicleController.store);
 
+routes.post(`/requestBooking/:id`,RequestController.store);
 
 routes.get('/fetchDetails/:id',VehicleController.fetchDetails);
 

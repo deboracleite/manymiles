@@ -23,7 +23,7 @@ const Routes = () => {
         <Route path="/registerVehicle" element={<PrivateRoute />}>
           <Route path="/registerVehicle" element={<RegisterVehicle />} /> 
         </Route>
-        
+        <Route path="/details/:id" element={<Details/>}/>
     </RouterDOM>
   );
 };

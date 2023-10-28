@@ -10,10 +10,10 @@ const RentalRequestSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    status: {
-      type: String,
-      required: true,
-    },
+    // status: {
+    //   type: String,
+    //   required: true,
+    // },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -22,6 +22,10 @@ const RentalRequestSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Vehicle',
     },
+    owner_id:{
+      type:mongoose.Schema.Types.ObjectId,
+      required:true,
+    }
   },
   {
     timestamps: true,

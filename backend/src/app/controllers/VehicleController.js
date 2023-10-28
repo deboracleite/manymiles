@@ -21,6 +21,7 @@ class VehicleController {
       dayPrice: Yup.number(),
       weekPrice: Yup.number(),
       monthPrice: Yup.number(),
+      
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -53,6 +54,10 @@ class VehicleController {
   async fetchDetails(req,res){
     //const {vehicleId}=req.body;
     const vehicles=await Vehicle.findById(req.params.id);
+
+    const image=await File.findById(req.params.id);
+
+    //let vehicle_detail = Object.assign(vehicles, image);
 //    res.send(data:vehicles);
     res.json(vehicles)
     console.log(vehicles);

@@ -22,7 +22,10 @@ const AuthProvider = ({ children }) => {
         email,
         password,
       });
-  
+      console.log(await api.post('/sessions', {
+        email,
+        password,
+      }));
       localStorage.setItem('@ManyMiles:token', token);
       localStorage.setItem('@ManyMiles:user', JSON.stringify(user));
   
