@@ -7,7 +7,7 @@ import api from "../../services/api";
 
 const RegisterVehicle = () =>{
 
-    const userID = "";
+    const ownerID = "";
     const [vehicleType, setVehicleType] = useState('car');
     const [brand, setBrand] = useState('');
     const [model, setModel] = useState('');

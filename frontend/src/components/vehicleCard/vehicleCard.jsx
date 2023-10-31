@@ -5,7 +5,7 @@ import { Container } from "./vehicleCardStyle";
 
 const VehicleCard = ({vehicle}) =>{
 
-    
+   
 
     return(
         <Container>

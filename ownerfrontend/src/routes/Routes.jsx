@@ -11,7 +11,7 @@ import SignIn from '../pages/SignIn/SignIn';
 import SignUp from '../pages/SignUp/SignUp';
 
 import RegisterVehicle from '../pages/Registervehicle/RegisterVehicle';
-import Details from '../pages/Details/details';
+// import Details from '../pages/Details/details';
 
 const Routes = () => {
   return (
@@ -23,7 +23,7 @@ const Routes = () => {
         <Route path="/registerVehicle" element={<PrivateRoute />}>
           <Route path="/registerVehicle" element={<RegisterVehicle />} /> 
         </Route>
-        <Route path="/details/:id" element={<Details/>}/>
+        {/* <Route path="/details/:id" element={<Details/>}/> */}
     </RouterDOM>
   );
 };

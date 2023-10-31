@@ -55,12 +55,15 @@ class VehicleController {
     //const {vehicleId}=req.body;
     const vehicles=await Vehicle.findById(req.params.id);
 
-    const image=await File.findById(req.params.id);
+    
+    // const vehicles = await Vehicle.find().populate('photo_list');
+
+    // return res.json(formatGetVehicle(vehicles));
 
     //let vehicle_detail = Object.assign(vehicles, image);
 //    res.send(data:vehicles);
     res.json(vehicles)
-    console.log(vehicles);
+   
   } 
 }
 

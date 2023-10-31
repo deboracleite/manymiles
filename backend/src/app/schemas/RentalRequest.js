@@ -25,6 +25,10 @@ const RentalRequestSchema = new mongoose.Schema(
     owner_id:{
       type:mongoose.Schema.Types.ObjectId,
       required:true,
+    },
+    vehicle_details:{
+      type:Array,
+      required:true
     }
   },
   {

@@ -1,38 +1,40 @@
 import User from '../schemas/User';
 import Request from '../schemas/RentalRequest'
+import RentalRequest from '../schemas/RentalRequest';
 class RequestController{
     async store(req,res){
-        console.log(req.body);
+                
+        
         const request=Request({
-            start_date: req.body.fromDate,end_date: req.body.untilDate, user_id:req.userId, vehicle_id: req.body.vehicleDetails._id, owner_id:req.body.vehicleDetails.user_id
+            start_date: req.body.fromDate,end_date: req.body.untilDate, user_id:req.userId, vehicle_id: req.body.vehicleDetails._id, owner_id:req.body.vehicleDetails.user_id, vehicle_details:req.body.returnVehicle
         })
-        const requestSaved=await request.save();
-        res.json(requestSaved)
-        console.log(requestSaved)
-    //    console.log(req.body.vehicleDetails._id);
-    //    console.log(req.userId);
-    //    try{
-         
+        
+        
+            let vehicleId=await RentalRequest.find({vehicle_id: req.body.vehicleDetails._id});
+            let ownerId=await RentalRequest.findOne({owner_id:req.body.vehicleDetails.user_id})
+            let userId=await RentalRequest.findOne({user_id:req.userId});
             
-    //     const {start_date, end_date,status}=req.body;
-    //     const errors = validationResult(req);
-        
-    //     if (!errors.isEmpty()) {
-    //         return res.status(400).json({ errors: errors.array() });
-    //     }
-        
-    //      let uName=await User.findById(req.user.id)
-        
-    //     const vehicle=new Vehicle({
-    //     start_date:req.body.startDate,vehicleType,startDate,endDate,userid:req.user.id,userName:uName.name
-    //     })
+            //TO prevent duplicate requests
 
-    //     const vehicleSaved=await vehicle.save();
-    //     res.json(vehicleSaved);
-    // }catch(error){
-    //     console.error(error.message);
-    //     res.status(500).send("Internal Server Error");
-    // } 
+            if(ownerId && vehicleId && userId){
+                console.log(true);
+            }else{
+                console.log(false);
+                const requestSaved=await request.save();
+                res.json(requestSaved)
+                console.log(requestSaved)
+            }
     }
+    async fetchDetails(req,res){
+        //const {vehicleId}=req.body;
+        const requests=await RentalRequest.find({user_id: req.userId});
+       console.log(requests);
+       
+        //let vehicle_detail = Object.assign(vehicles, image);
+    //    res.send(data:vehicles);
+        res.json(requests);
+       
+      } 
 }
+
 export default new RequestController();

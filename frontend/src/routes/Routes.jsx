@@ -12,6 +12,7 @@ import SignUp from '../pages/SignUp/SignUp';
 
 import RegisterVehicle from '../pages/Registervehicle/RegisterVehicle';
 import Details from '../pages/Details/details';
+import Requests from '../pages/Requests/Requests';
 
 const Routes = () => {
   return (
@@ -19,11 +20,13 @@ const Routes = () => {
         <Route exact path="/" element={<Home />}/>
         <Route path="/signIn" element={<SignIn />}/>
         <Route path="/signup" element={<SignUp />} /> 
+        <Route path="/requests" element={<Requests/>}/>
         <Route path="/registerVehicle" element={<RegisterVehicle />} /> 
         <Route path="/registerVehicle" element={<PrivateRoute />}>
           <Route path="/registerVehicle" element={<RegisterVehicle />} /> 
         </Route>
         <Route path="/details/:id" element={<Details/>}/>
+        
     </RouterDOM>
   );
 };

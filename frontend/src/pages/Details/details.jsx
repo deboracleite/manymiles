@@ -15,20 +15,42 @@ const details=() => {
         .then((res)=>res.data)        
         .then((data) => {setVehicleDetails(data),console.log(data)})
     },[id])
+   
+   const [allVehicleDetails,setAllVehicleDetails]=useState("");
+   const [returnVehicle,setReturnVehicle]=useState("");
+   useEffect(()=>{
+    api.get('/vehicles')
+    .then((res)=>res.data)
+    .then((data)=>{setAllVehicleDetails(data),console.log(data)})
+    findData();
+   },[vehicleDetails]); 
+
+   
+   const findData=()=>{
+      console.log(id);
+      
+     
+      for(var i=0;i<allVehicleDetails.length;i++){
+        console.log(allVehicleDetails[i].id);
+          if(id==allVehicleDetails[i].id){
+            console.log(allVehicleDetails[i]);
+            setReturnVehicle(allVehicleDetails[i]);
+          }
+      }
+   }
    const handleSubmit = async (e)=>{
-      e.preventDefault();  
-     api.post(`/requestBooking/${vehicleDetails._id}`,{vehicleDetails,fromDate,untilDate})
-     
-    
-     
-   } 
+    e.preventDefault();  
+   api.post(`/requestBooking/${vehicleDetails._id}`,{vehicleDetails,returnVehicle,fromDate,untilDate});   
+ }
+   
   return (
     <div className='container'>
     <div className='img_container'>
-    <img src={vehicleDetails.photo_list} className="ImgItem" alt="ImgItem"/>
-    {console.log(vehicleDetails)}
-    </div>
     
+ 
+    {returnVehicle!="" && <img src={returnVehicle.photoList[0].url} className="ImgItem" alt="ImgItem"/>}
+    </div> 
+   
     <h1 className='vehicle_brand' style={{color:"black"}}>{vehicleDetails.brand}</h1>
     
     <h2 className='vehicle_model' style={{color:"black"}}>{vehicleDetails.model}</h2>

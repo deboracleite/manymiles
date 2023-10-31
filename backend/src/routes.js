@@ -33,4 +33,5 @@ routes.post(`/requestBooking/:id`,RequestController.store);
 
 routes.get('/fetchDetails/:id',VehicleController.fetchDetails);
 
+routes.get('/fetchDetails',RequestController.fetchDetails);
 export default routes;
