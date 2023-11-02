@@ -4,6 +4,8 @@ import { json, useParams } from 'react-router-dom'
 import axios from 'axios'
 import api from '../../services/api'
 import Header from '../../components/header/Header'
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import {Container} from "./detailsStyle"
 
 const details=() => {
@@ -113,10 +115,20 @@ const details=() => {
             {vehicleDetails!="" && <img src={vehicleDetails.photoList[0].url} className="ImgItem" alt="ImgItem"/>}
           </div>
           <div className='informationVehicle'>
-            <h1 className='vehicle_brand' >{vehicleDetails.brand} {vehicleDetails.model}</h1>
-            <h3 className='vehicle_description' >{vehicleDetails.description}</h3>
-            <div className="line"></div>
+            <h1 className='vehicle_brand' >{vehicleDetails.brand} {vehicleDetails.model} {vehicleDetails.year}</h1>
+            <div className='vehicleDetail'>
+              <div className='vehicle_color'>
+                <ColorLensIcon/> 
+                <p > {vehicleDetails.color}</p>
+              </div>
+              <div className='vehicle_fuel'>
+                <LocalGasStationIcon/>
+                <p>{vehicleDetails.fuelType}</p>
+              </div>
+            </div>
+            <p className='vehicle_description' >Description: {vehicleDetails.description}</p>
             <h3>Rent Informations</h3>
+            <div className="line"></div>
             <div className='rentIformation'>
               <p>Per Day: ${vehicleDetails.dayPrice}</p>
               <p>|</p>
@@ -127,13 +139,13 @@ const details=() => {
              <form >
                <div className="date-input">
                   <div className="date-input-field">
-                    <label>From</label>
+                    <label>From: </label>
                     <div className="input-container">
                        <input type="date" placeholder="" onChange={(e)=>{setFromDate(e.target.value); calculatePrice();}} />             
                     </div>
                   </div>
                   <div className="date-input-field">
-                   <label>Until</label>
+                   <label>Until: </label>
                     <div className="input-container">
                        <input type="date" placeholder="+1" onChange={(e)=>{setUntilDate(e.target.value); calculatePrice();}}/>
                     </div>
@@ -142,8 +154,9 @@ const details=() => {
                 <div className="price-details">
                     <p>Price without tax: ${priceWithoutTax.toFixed(2)}</p>
                     <p>Price with tax (Ontario 13%): ${priceWithTax.toFixed(2)}</p>
-              </div>
-               <button type="submit" onClick={handleSubmit}>Request booking</button>
+                    <button type="submit" onClick={handleSubmit}>Request booking</button>
+                </div>
+               
             </form>
           </div>
       </div>
