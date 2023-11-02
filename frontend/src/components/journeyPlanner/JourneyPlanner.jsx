@@ -41,33 +41,13 @@ const JourneyPlanner = () => {
                 <div className="date-input-field">
                     <label>From</label>
                     <div className="input-container">
-                        {/* <DatePicker
-                            selected={fromDate}
-                            onChange={handleFromDatePickerChange}
-                            open={isFromDatePickerOpen}
-                            onCalendarOpen={() => setFromDatePickerOpen(true)}
-                            onCalendarClose={() => setFromDatePickerOpen(false)}
-                            calendarClassName="datepicker-calendar"
-                            className="datepicker"
-                        /> */}
                         <input type="date" placeholder="" onSelect={(e)=>setFromDate(e.target.value)}/>
-                        {/* <KeyboardArrowDownIcon onClick={() => setFromDatePickerOpen(!isFromDatePickerOpen)} /> */}
                         <input type="time" placeholder="Select time" className="timepicker" />
                     </div>
                 </div>
                 <div className="date-input-field">
                     <label>Until</label>
                     <div className="input-container">
-                        {/* <DatePicker
-                            selected={untilDate}
-                            onChange={handleUntilDatePickerChange}
-                            open={isUntilDatePickerOpen}
-                            onCalendarOpen={() => setUntilDatePickerOpen(true)}
-                            onCalendarClose={() => setUntilDatePickerOpen(false)}
-                            calendarClassName="datepicker-calendar"
-                            className="datepicker"
-                        />
-                        <KeyboardArrowDownIcon onClick={() => setUntilDatePickerOpen(!isUntilDatePickerOpen)} /> */}
                         <input type="date" placeholder="+1" onSelect={(e)=>setUntilDate(e.target.value)}/>
                         <input type="time" placeholder="Select time" className="timepicker" />
                     </div>

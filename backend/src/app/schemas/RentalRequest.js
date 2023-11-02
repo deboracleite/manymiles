@@ -29,6 +29,14 @@ const RentalRequestSchema = new mongoose.Schema(
     vehicle_details:{
       type:Array,
       required:true
+    },
+    priceWithoutTax:{
+      type: Number,
+      default: 0
+    },
+    priceWithTax:{
+      type: Number,
+      default: 0
     }
   },
   {

@@ -52,17 +52,11 @@ class VehicleController {
   }
  
   async fetchDetails(req,res){
-    //const {vehicleId}=req.body;
-    const vehicles=await Vehicle.findById(req.params.id);
 
+    console.log(req.params.id);
+    const vehicles=await Vehicle.findById(req.params.id).populate('photo_list');
     
-    // const vehicles = await Vehicle.find().populate('photo_list');
-
-    // return res.json(formatGetVehicle(vehicles));
-
-    //let vehicle_detail = Object.assign(vehicles, image);
-//    res.send(data:vehicles);
-    res.json(vehicles)
+    return res.json(formatGetVehicle([vehicles])[0]);
    
   } 
 }

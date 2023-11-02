@@ -17,7 +17,7 @@ const VehicleFeed = () =>{
     return(
         <Container>
             <ul className='vehicleList'>
-                {vehicleList.map(vehicle => (<VehicleCard key={vehicle.id} className="vehicleItem" vehicle={vehicle}
+                {vehicleList.length && vehicleList.map(vehicle => (<VehicleCard key={vehicle.id} className="vehicleItem" vehicle={vehicle}
                 />))}
             </ul>
             
