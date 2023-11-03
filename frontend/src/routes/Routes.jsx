@@ -12,7 +12,8 @@ import SignUp from '../pages/SignUp/SignUp';
 
 import RegisterVehicle from '../pages/Registervehicle/RegisterVehicle';
 import Details from '../pages/Details/details';
-import Requests from '../pages/Requests/Requests';
+import BookingRequests from '../pages/BookingRequests/BookingRequests';
+import MyAccount from '../pages/MyAccount/MyAccount'
 
 const Routes = () => {
   return (
@@ -20,10 +21,15 @@ const Routes = () => {
         <Route exact path="/" element={<Home />}/>
         <Route path="/signIn" element={<SignIn />}/>
         <Route path="/signup" element={<SignUp />} /> 
-        <Route path="/requests" element={<Requests/>}/>
         <Route path="/registerVehicle" element={<RegisterVehicle />} /> 
         <Route path="/registerVehicle" element={<PrivateRoute />}>
           <Route path="/registerVehicle" element={<RegisterVehicle />} /> 
+        </Route>
+        <Route path="/myAccount" element={<PrivateRoute />}>
+          <Route path="/myAccount" element={<MyAccount/>} /> 
+        </Route>
+        <Route path="/bookingRequest" element={<PrivateRoute />}>
+          <Route path="/bookingRequest" element={<BookingRequests/>} /> 
         </Route>
         <Route path="/details/:id" element={<Details/>}/>
         

@@ -4,7 +4,7 @@ import RentalRequest from '../schemas/RentalRequest';
 import Vehicle from '../schemas/Vehicle';
 class RequestController{
     async store(req,res){
-        console.log("0ii");
+
         const request = Yup.object().shape({
             start_date: Yup.date(),
             end_date: Yup.date(),
@@ -21,7 +21,7 @@ class RequestController{
         }   
         
         const { vehicle_id} = req.body;
-console.log("USER",req.userId)
+        console.log("USER",req.userId)
         const vehicleId = await Vehicle.findOne({_id: vehicle_id})
         //console.log("request body", vehicleId); 
         const userId = await User.findOne({_id: req.userId})
@@ -62,11 +62,11 @@ console.log("USER",req.userId)
     async fetchDetails(req,res){
         //const {vehicleId}=req.body;
         const requests=await RentalRequest.find({user_id: req.userId});
-       console.log(requests);
+        console.log(requests);
        
         //let vehicle_detail = Object.assign(vehicles, image);
     //    res.send(data:vehicles);
-        res.json(requests);
+        return res.json(requests);
        
       } 
 }

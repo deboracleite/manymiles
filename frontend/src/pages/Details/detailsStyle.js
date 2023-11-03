@@ -20,8 +20,8 @@ export const Container  = styled.div`
         justify-content: center;
         height: fit-content;
         img{
-            width: 50%;
-            height: 30%;
+            width: 330px;
+            height: 280px;
         }
     }
 

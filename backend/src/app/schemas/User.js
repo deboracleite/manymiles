@@ -27,6 +27,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: 'regular',
     },
+    avatar: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'File',
+    },
+    
   },
   {
     timestamps: true,

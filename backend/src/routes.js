@@ -27,6 +27,8 @@ routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
 
+routes.get('/getProfile', UserController.getUser);
+
 routes.post('/vehicles', upload.array('files', 5), VehicleController.store);
 
 routes.post(`/requestBooking/:id`,RequestController.store);

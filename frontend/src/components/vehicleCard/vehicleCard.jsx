@@ -15,7 +15,7 @@ const VehicleCard = ({vehicle}) =>{
                 <img src={vehicle.photoList[0].url} className="ImgItem" alt="ImgItem"/>
                 </div>
                 <div className="itemTitle">
-                    <Link to={`/details/${vehicle.id}`}>More Details</Link> 
+                    <Link to={`/details/${vehicle.id}`}>{vehicle.model}</Link> 
                 </div>
                 <div className="itemPrice">
                     <h6>Hourly Rate: <script>console.log(vehicle.hour_price)</script>{vehicle.hourPrice}</h6>

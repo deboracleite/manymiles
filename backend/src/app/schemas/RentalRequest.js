@@ -44,4 +44,5 @@ const RentalRequestSchema = new mongoose.Schema(
   }
 );
 
+
 export default mongoose.model('RentalRequest', RentalRequestSchema);

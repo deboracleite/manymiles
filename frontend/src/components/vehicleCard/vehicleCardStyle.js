@@ -42,4 +42,9 @@ export const Container = styled.div`
 .itemPrice{
     color: #030303;
 }
+
+.date-info p{
+        margin-bottom: 10px;
+    
+}
 `
