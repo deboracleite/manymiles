@@ -37,7 +37,11 @@ const RentalRequestSchema = new mongoose.Schema(
     priceWithTax:{
       type: Number,
       default: 0
-    }
+    },
+    status:{
+      type:Boolean,
+      
+    },
   },
   {
     timestamps: true,

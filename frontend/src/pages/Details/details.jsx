@@ -24,6 +24,7 @@ const details=() => {
         api.get(`/fetchDetails/${id}`,{id})
         .then((res)=>res.data)        
         .then((data) => {setVehicleDetails(data)})
+        .then((data)=>{console.log(data)})
     },[id])
     console.log("debora",vehicleDetails);
    
@@ -95,7 +96,7 @@ const details=() => {
    api.post(`/requestBooking/${vehicleDetails.id}`,
    {
     vehicle_id: vehicleDetails.id, 
-    owner_id: vehicleDetails.id,
+    owner_id: vehicleDetails.user_id,
     start_date: fromDate,
     end_date: untilDate,
     vehicle_details: vehicleDetails.description,
@@ -115,6 +116,8 @@ const details=() => {
             {vehicleDetails!="" && <img src={vehicleDetails.photoList[0].url} className="ImgItem" alt="ImgItem"/>}
           </div>
           <div className='informationVehicle'>
+          {vehicleDetails!="" && <h3>Owner Name: {vehicleDetails._doc.first_name+" "+vehicleDetails._doc.last_name}</h3>}
+          {vehicleDetails!="" && <h5>Date Added: {vehicleDetails.date}</h5>}
             <h1 className='vehicle_brand' >{vehicleDetails.brand} {vehicleDetails.model} {vehicleDetails.year}</h1>
             <div className='vehicleDetail'>
               <div className='vehicle_color'>

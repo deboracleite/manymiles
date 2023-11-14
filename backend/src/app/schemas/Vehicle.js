@@ -85,7 +85,7 @@ export const parseCreateVehicle = vehicleBody => {
     day_price: vehicleBody.dayPrice || 0,
     week_price: vehicleBody.weekPrice || 0,
     month_price: vehicleBody.monthPrice || 0,
-    owner: vehicleBody.ownerId,
+    owner_id: vehicleBody.ownerId,
     photo_list: vehicleBody.photos,
   };
 };
@@ -112,6 +112,7 @@ export const formatGetVehicle = vehicles => {
       dayPrice: vehicle.day_price,
       weekPrice: vehicle.week_price,
       monthPrice: vehicle.month_price,
+      
     };
   });
 };

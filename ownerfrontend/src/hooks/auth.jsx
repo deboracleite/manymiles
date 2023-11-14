@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
         password,
       }));
       localStorage.setItem('@ManyMiles:token', token);
-      localStorage.setItem('@ManyMiles:user', JSON.stringify(owner));
+      localStorage.setItem('@ManyMiles:owner', JSON.stringify(owner));
   
       api.defaults.headers.authorization = `Bearer ${token}`;
   

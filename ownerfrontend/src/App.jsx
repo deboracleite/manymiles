@@ -5,12 +5,15 @@ import GlobalStyle from './styles/global';
 import AppProvider from './hooks';
 
 import Routes from './routes/Routes';
+import SignIn from './pages/SignIn/SignIn';
 function App() {
   return (
     <BrowserRouter>
-    <AppProvider>
+    
+     <AppProvider>
      <Routes/>
      </AppProvider>
+     
     <GlobalStyle/>
    </BrowserRouter>
   );

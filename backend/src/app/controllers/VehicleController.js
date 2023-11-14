@@ -5,6 +5,8 @@ import Vehicle, {
   formatGetVehicle,
 } from '../schemas/Vehicle';
 import File, { parseFile } from '../schemas/File';
+import User from '../schemas/User';
+import Owner from '../schemas/Owner';
 
 class VehicleController {
   async store(req, res) {
@@ -37,9 +39,9 @@ class VehicleController {
     }
 
     const photos = await File.insertMany(req.files.map(parseFile));
-
+      console.log(req.body);
     const vehicle = await Vehicle.create(
-      parseCreateVehicle({ ...req.body, userId: req.userId, photos })
+      parseCreateVehicle({ ...req.body, owner_id:req.params.id, photos })
     );
 
     return res.json(vehicle);
@@ -51,12 +53,46 @@ class VehicleController {
     return res.json(formatGetVehicle(vehicles));
   }
  
+  
+  async fetchAllVehicle(req,res){
+    let owner_id=req.params.id;
+    const vehicles = await Vehicle.find({owner_id}).populate('photo_list');
+   console.log(vehicles);
+    return res.json(vehicles);
+    
+  }
   async fetchDetails(req,res){
 
-    console.log(req.params.id);
-    const vehicles=await Vehicle.findById(req.params.id).populate('photo_list');
     
-    return res.json(formatGetVehicle([vehicles])[0]);
+    
+    // console.log(user);
+    
+
+
+    const vehicles=await Vehicle.findById(req.params.id).populate('photo_list');
+    const date=new Date(vehicles.createdAt).toISOString().split('T')[0];
+    const owner=await Owner.findOne({_id:vehicles.owner_id});
+    
+    // let allDetails=Object.assign({},);
+    let details={...formatGetVehicle([vehicles])[0],...owner,date}
+    // console.log(allDetails);
+    return res.json(details);
+   
+  } 
+  async fetchDetail(req,res){
+
+    
+    
+    // console.log(user);
+    const vehicles=await Vehicle.findById(req.params.id).populate('photo_list');
+    const date=new Date(vehicles.createdAt).toISOString().split('T')[0];
+    const user=await User.findOne({_id:req.params.user_id});
+    //console.log(user);
+    // let allDetails=Object.assign({},);
+    let details={...formatGetVehicle([vehicles])[0],...user}
+    // console.log(allDetails);
+    
+    return res.json(details);
    
   } 
 }

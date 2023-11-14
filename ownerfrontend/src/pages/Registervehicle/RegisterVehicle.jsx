@@ -5,9 +5,12 @@ import Header from "../../components/header/Header";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import api from "../../services/api";
 
+import { useAuth } from '../../hooks/auth';
+
 const RegisterVehicle = () =>{
 
-    const ownerID = "";
+    const { owner } = useAuth();
+    const ownerId=owner.id;
     const [vehicleType, setVehicleType] = useState('car');
     const [brand, setBrand] = useState('');
     const [model, setModel] = useState('');
@@ -55,6 +58,7 @@ const RegisterVehicle = () =>{
       };
 
     const handleSubmit = async event => {
+        
         event.preventDefault();
         const formData = new FormData();
         selectedFiles.forEach(file => {
@@ -72,8 +76,8 @@ const RegisterVehicle = () =>{
         rentalDay && formData.append("dayPrice", rentalDay);
         rentalWeek && formData.append("weekPrice", rentalWeek);
         rentalMonth && formData.append("monthPrice", rentalMonth);
-
-        await api.post('/vehicles', formData);
+        formData.append('ownerId', ownerId);
+        await api.post(`/vehicles/${ownerId}`, formData);
         navigate('/');
     }
 

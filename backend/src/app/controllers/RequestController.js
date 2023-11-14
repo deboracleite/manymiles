@@ -2,6 +2,9 @@ import * as Yup from 'yup';
 import User from '../schemas/User';
 import RentalRequest from '../schemas/RentalRequest';
 import Vehicle from '../schemas/Vehicle';
+import Owner from '../schemas/Owner';
+import User from '../schemas/User';
+import { request } from 'express';
 class RequestController{
     async store(req,res){
 
@@ -23,14 +26,16 @@ class RequestController{
         const { vehicle_id} = req.body;
         console.log("USER",req.userId)
         const vehicleId = await Vehicle.findOne({_id: vehicle_id})
+       
         //console.log("request body", vehicleId); 
         const userId = await User.findOne({_id: req.userId})
-
+        const ownerId=await Owner.findOne({_id:vehicleId.owner_id})
+        console.log(ownerId);
         if (!(vehicleId && userId)) {
             return res.status(400).json({ error: 'Vehicle already exists.' });
         }
        //console.log("request body", req.body);   
-        const reponse = await RentalRequest.create({...req.body, user_id: req.userId, owner_id: req.userId})
+        const reponse = await RentalRequest.create({...req.body, user_id: req.userId, owner_id: ownerId._id})
         
 
         return res.json(reponse);
@@ -69,6 +74,36 @@ class RequestController{
         return res.json(requests);
        
       } 
+      async fetchRequests(req,res){
+        //const {vehicleId}=req.body;
+
+        const requests=await RentalRequest.find({vehicle_id:req.params.id});
+        
+    
+
+        //   let details={...requests};
+        console.log(requests);
+          //let vehicle_detail = Object.assign(vehicles, image);
+    //    res.send(data:vehicles);
+        return res.json(requests);
+       
+      } 
+      async notifyUser(req,res){
+       
+        console.log(typeof(req.params.status))
+        if(req.params.status==="true"){
+            
+            const requests=await RentalRequest.findOneAndUpdate({_id:req.params.requestId},{$set:{status:true}},{new: true});
+            // console.log(requests);
+        }else if(req.params.status=="false"){
+            const requests=await RentalRequest.findOneAndUpdate({_id:req.params.requestId},{$set:{status:false}},{useFindAndModify: false});
+            // console.log(requests);
+        }
+
+        
+        
+        
+      }
 }
 
 export default new RequestController();

@@ -23,17 +23,28 @@ routes.post('/sessionsOwner',SessionControllerOwner.store);
 
 routes.get('/vehicles', VehicleController.index);
 
+
 routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
 
 routes.get('/getProfile', UserController.getUser);
 
-routes.post('/vehicles', upload.array('files', 5), VehicleController.store);
+//routes.post('/vehicles', upload.array('files', 5), VehicleController.store);
+routes.post('/vehicles/:id', upload.array('files', 5), VehicleController.store);
 
 routes.post(`/requestBooking/:id`,RequestController.store);
+
+routes.get('/fetchDetail/:id/:user_id',VehicleController.fetchDetail);
 
 routes.get('/fetchDetails/:id',VehicleController.fetchDetails);
 
 routes.get('/fetchDetails',RequestController.fetchDetails);
+
+routes.get('/fetchAllVehicle/:id',VehicleController.fetchAllVehicle);
+
+routes.get('/fetchRequests/:id',RequestController.fetchRequests);
+
+routes.post('/notifyUser/:requestId/:status',RequestController.notifyUser);
+
 export default routes;

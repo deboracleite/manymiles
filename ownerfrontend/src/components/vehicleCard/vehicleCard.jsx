@@ -5,22 +5,23 @@ import { Container } from "./vehicleCardStyle";
 
 const VehicleCard = ({vehicle}) =>{
 
-    
+    console.log(vehicle)
 
     return(
         <Container>
             <div className="blockItem">
                 <div>
-                <img src={vehicle.photoList[0].url} className="ImgItem" alt="ImgItem"/>
+                <img src={vehicle.photo_list[0].url} className="ImgItem" alt="ImgItem"/>
                 </div>
                 <div className="itemTitle">
-                    <Link to="/">{vehicle.model}</Link>
+                    {/* <Link to="/">{vehicle.model}</Link> */}
+                    <Link to={`/details/${vehicle._id}`}>{vehicle.model}</Link> 
                 </div>
                 <div className="itemPrice">
                     <h6>Hourly Rate: <script>console.log(vehicle.hour_price)</script>{vehicle.hourPrice}</h6>
                 </div>
                 <div className="moreDetails">
-                    <Link to={`/details/${vehicle.id}`}>More Details</Link>
+                    {/* <Link to={`/details/${vehicle.id}`}>More Details</Link> */}
                 </div>
                 
                 

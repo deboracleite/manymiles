@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import {Container} from "./requestItemStyle" ;
 import api from '../../services/api';
-
+import { Link} from 'react-router-dom'; 
 const RequestsList=({request}) => {
 
   const id = request.vehicle_id
@@ -14,11 +14,24 @@ const RequestsList=({request}) => {
     .then((res)=>res.data)        
     .then((data) => {setVehicleDetails(data), console.log(data)})
   },[id])
-
+const status=()=>{
+  console.log(request.status)
+  if(request.status==true){
+    
+  //  return <p>Request Accepted</p>
+   return { colorClass: 'accepted-status', text: 'Request Accepted' };
+  }else if(request.status==false){
+    // return <p>Request Declined</p>
+    return { colorClass: 'declined-status', text: 'Request Declined' };
+  }
+  return null;
+ 
+}
+const getStatus = status();
   return (
 
-    <Container>
-      <div className='blockItem'>
+    <Container >
+      <div className={`blockItem ${getStatus ? getStatus.colorClass : ''}`}>
               <h2>{vehicleDetails.brand} {vehicleDetails.model} {vehicleDetails.year}</h2>
               <div className='detailItem'>
                 <div className='date-info'>
@@ -28,7 +41,13 @@ const RequestsList=({request}) => {
                 <div className='price-info'>
                   <p>Total: {request.priceWithTax}</p>
                 </div>
+                <div className='status-info'>
+                {getStatus && <p>{getStatus.text}</p>}
+                </div>
               </div>
+              <div className='submitButton'></div>
+              {/* For Now I am redirecting to home page */}
+              {request.status && <Link to="/"> <button type="submit" >More details</button></Link>}
               
       </div>
     </Container>
