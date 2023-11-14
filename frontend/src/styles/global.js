@@ -8,12 +8,15 @@ export default createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     outline: 0;
+    
   }
+  
   body {
     background: #fff;
     color: #FFF;
     -webkit-font-smoothing: antialiased;
   }
+
 
   body, input, button {
     font-family: 'RobotoRegular', sans-serif;
@@ -32,5 +35,4 @@ export default createGlobalStyle`
   font-family: "RobotoRegular";
   src: url({RobotoRegular}) format('truetype');
 }
-
 `;

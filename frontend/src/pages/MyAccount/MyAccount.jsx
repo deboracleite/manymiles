@@ -56,12 +56,9 @@ const MyAccount = () => {
     };
 
     const handleSaveClick = async () => {
-        console.log("user atualizado", updatedUserData);
-
         if (updatedUserData.password === updatedUserData.confirmPassword) {
             try {
                 const response = await api.put(`/users`, updatedUserData);
-                console.log({response})
                 setIsEditing(false);
             } catch (error) {
                 console.error(error);
@@ -72,72 +69,70 @@ const MyAccount = () => {
     };
 
     return (
-        <>
-            <Header />
-            <Container>
-                <form className='form-details'>
-                    <h2>My Account</h2>
-                    <div className="line"></div>
-                    <label>
-                        First Name:
-                        {isEditing ? (
-                            <input type="text" value={updatedUserData.firstName} onChange={(e) => handleFieldChange("firstName", e.target.value)} />
-                        ) : (
-                            <span>{userDetail.first_name}</span>
-                        )}
-                    </label>
-                    <label>
-                        Last Name:
-                        {isEditing ? (
-                            <input type="text" value={updatedUserData.lastName} onChange={(e) => handleFieldChange("lastName", e.target.value)} />
-                        ) : (
-                            <span>{userDetail.last_name}</span>
-                        )}
-                    </label>
-                    <label>
-                        Email:
-                        {isEditing ? (
-                            <input type="text" value={updatedUserData.email} onChange={(e) => handleFieldChange("email", e.target.value)} />
-                        ) : (
-                            <span>{userDetail.email}</span>
-                        )}
-                    </label>
-                    <label>
-                        Birthday:
-                        {isEditing ? (
-                            <input type="date" value={userDetail.birthday ? updatedUserData.birthday.slice(0 ,10): ""} onChange={(e) => handleFieldChange("birthday", e.target.value)} />
-                        ) : (
-                            <span>{userDetail.birthday ? userDetail.birthday.slice(0 ,10): ""}</span>
-                        )}
-                    </label>
-                    <label>
-                        Password:
-                        {isEditing ? (
-                            <input type="password" value={updatedUserData.password} onChange={(e) => handleFieldChange("password", e.target.value)} />
-                        ) : (
-                            <span>******</span>
-                        )}
-                    </label>
 
-                    {isEditing && (
-                        <label>
-                            Confirm Password:
-                            <input type="password" value={updatedUserData.confirmPassword} onChange={(e) => handleFieldChange("confirmPassword", e.target.value)} />
-                        </label>
-                    )}
-                </form>
-                <div className='group-button'>
+        <Container>
+            <form className='form-details'>
+                <h2>My Account</h2>
+                <div className="line"></div>
+                <label>
+                    First Name:
                     {isEditing ? (
-                        <>
-                            <button onClick={handleCancelClick}>Cancel</button>
-                            <button onClick={handleSaveClick}>Save</button>
-                        </>
+                        <input type="text" value={updatedUserData.firstName} onChange={(e) => handleFieldChange("firstName", e.target.value)} />
                     ) : (
-                        <button onClick={handleEditClick}>Edit</button>
+                        <span>{userDetail.first_name}</span>
                     )}
-                </div>
-            </Container>
-        </>
+                </label>
+                <label>
+                    Last Name:
+                    {isEditing ? (
+                        <input type="text" value={updatedUserData.lastName} onChange={(e) => handleFieldChange("lastName", e.target.value)} />
+                    ) : (
+                        <span>{userDetail.last_name}</span>
+                    )}
+                </label>
+                <label>
+                    Email:
+                    {isEditing ? (
+                        <input type="text" value={updatedUserData.email} onChange={(e) => handleFieldChange("email", e.target.value)} />
+                    ) : (
+                        <span>{userDetail.email}</span>
+                    )}
+                </label>
+                <label>
+                    Birthday:
+                    {isEditing ? (
+                        <input type="date" value={userDetail.birthday ? updatedUserData.birthday.slice(0, 10) : ""} onChange={(e) => handleFieldChange("birthday", e.target.value)} />
+                    ) : (
+                        <span>{userDetail.birthday ? userDetail.birthday.slice(0, 10) : ""}</span>
+                    )}
+                </label>
+                <label>
+                    Password:
+                    {isEditing ? (
+                        <input type="password" value={updatedUserData.password} onChange={(e) => handleFieldChange("password", e.target.value)} />
+                    ) : (
+                        <span>******</span>
+                    )}
+                </label>
+
+                {isEditing && (
+                    <label>
+                        Confirm Password:
+                        <input type="password" value={updatedUserData.confirmPassword} onChange={(e) => handleFieldChange("confirmPassword", e.target.value)} />
+                    </label>
+                )}
+            </form>
+            <div className='group-button'>
+                {isEditing ? (
+                    <>
+                        <button onClick={handleCancelClick}>Cancel</button>
+                        <button onClick={handleSaveClick}>Save</button>
+                    </>
+                ) : (
+                    <button onClick={handleEditClick}>Edit</button>
+                )}
+            </div>
+        </Container>
     );
 }
 

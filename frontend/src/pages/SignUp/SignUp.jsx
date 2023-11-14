@@ -20,8 +20,6 @@ const SignUp = () => {
     }
 
     return (
-        <>
-        <Header />
         <Container>
             <div className="main">
                 <LeftSide>
@@ -69,7 +67,6 @@ const SignUp = () => {
                 </RightSide>
             </div>
         </Container>
-        </>
     );
 };
 

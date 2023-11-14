@@ -1,26 +1,56 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container } from './headerStyle';
-import { useAuth } from '../../hooks/auth';
-const Header = () =>{
-    const { user, signOut } = useAuth();
-    
-    return(
-        <Container>
-            <nav>
-                <ul className="menu-list">
-                    <li><Link to="/" >Home</Link></li>
-                     <li><Link to="/" >Rent your vehicle</Link></li> 
-                    <li id='name-logo' className="centered" >MANYMILES</li>
-                    { user && <li className='right'><Link to="/registerVehicle" >Register Vehicle</Link></li>}
-                    { user && <li className='right'><Link to="/bookingRequest" >Booking Request</Link></li>}
-                    {!user ? <li className='right'><Link to="/signIn" >Sign In</Link></li> :
-                    <li className='right' onClick={() => signOut()}><Link to="/" >Sign Out</Link></li>}
-                    {user && <li className='right'><Link to="/myAccount" >My account</Link></li> }
-                </ul>
-            </nav>
+import { VscAccount, VscSignIn, VscSignOut, VscHome } from 'react-icons/vsc';
 
-        </Container>
+import { LeftMenu, CenterLogo, RightMenu, StyledLink, MenuItem, HeaderContainer } from './headerStyle';
+import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
+const Header = () => {
+    const { user, signOut } = useAuth();
+    const isAdmin = user && user.user_role === 'admin';
+    const { addToast } = useToast();
+
+    const handleSignOut = () => {
+        signOut();
+        addToast({
+            type: 'success',
+            title: 'SignOut Success',
+            description: 'The user has been successfully signed out',
+        });
+    }
+    return (
+        <HeaderContainer>
+            <LeftMenu>
+                <MenuItem><StyledLink to="/"><VscHome size={24} /></StyledLink></MenuItem>
+                {user && <MenuItem><StyledLink to="/registerVehicle">{isAdmin ? 'Register Vehicle' : 'Rent Vehicle'}</StyledLink></MenuItem>}
+                {user && <MenuItem><StyledLink to="/bookingRequest">Book Requests</StyledLink></MenuItem>}
+                {user && <MenuItem><StyledLink to="/payment">Payments</StyledLink></MenuItem>}
+
+            </LeftMenu>
+            <CenterLogo>
+                <MenuItem><StyledLink to="/">MANYMILES</StyledLink></MenuItem>
+            </CenterLogo>
+
+            <RightMenu>
+                {user && <MenuItem>
+                    <StyledLink to="/myAccount">
+                        <VscAccount size={24} />
+                    </StyledLink>
+                </MenuItem>}
+
+                {!user ?
+                    <MenuItem>
+                        <StyledLink to="/signIn">
+                            <VscSignIn size={24} />
+                        </StyledLink>
+                    </MenuItem> :
+                    <MenuItem onClick={handleSignOut}>
+                        <StyledLink to="/">
+                            <VscSignOut size={24} />
+                        </StyledLink>
+                    </MenuItem>}
+
+            </RightMenu>
+        </HeaderContainer>
     );
 
 }

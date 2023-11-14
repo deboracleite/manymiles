@@ -4,23 +4,23 @@ import { useTransition } from 'react-spring';
 import Toast from './toast';
 import { Container } from './styles';
 
-const ToastContainer = ({ messages }) => {
-    console.log(messages)
-  const messagesWithTransitions = messages && messages.length ? useTransition(
+const ToastContainer = ({messages}) => {
+  if(!messages || !messages.length) return (<></>) 
+  const [transitions] = useTransition(
     messages,
-    message => message.id,
-    {
+    () => ({
       from: { right: '-120%', opacity: 0 },
       enter: { right: '0%', opacity: 1 },
       leave: { right: '-120%', opacity: 0 },
-    },
-  ): [];
+    }),
+  );
   return (
     <Container>
-      {messagesWithTransitions.map(({ item, key, props }) => (
-        <Toast key={key} style={props} message={item} />
+      {transitions((style, item, props) => (
+        <Toast key={`${Math.random()}`} style={props} message={item} />
       ))}
     </Container>
+
   );
 };
 

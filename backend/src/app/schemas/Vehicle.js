@@ -85,20 +85,33 @@ export const parseCreateVehicle = vehicleBody => {
     day_price: vehicleBody.dayPrice || 0,
     week_price: vehicleBody.weekPrice || 0,
     month_price: vehicleBody.monthPrice || 0,
-    owner_id: vehicleBody.ownerId,
+    owner: vehicleBody.ownerId,
     photo_list: vehicleBody.photos,
   };
 };
 
+export const checkPhoto = (photoList) => {
+  if (!photoList.length) {
+    return [{
+      id: 1,
+      name: "default",
+      url: `${process.env.APP_URL}/files/default_list_car.png`
+    }]
+  }
+
+  return photoList.map(photo => ({
+    id: photo._id,
+    name: photo.name,
+    url: photo.url,
+  }))
+}
+
 export const formatGetVehicle = vehicles => {
+
   return vehicles.map(vehicle => {
     return {
       availability: vehicle.availability,
-      photoList: vehicle.photo_list.map(photo => ({
-        id: photo._id,
-        name: photo.name,
-        url: photo.url,
-      })),
+      photoList: checkPhoto(vehicle.photo_list),
       id: vehicle._id,
       type: vehicle.type,
       brand: vehicle.brand,
@@ -112,8 +125,23 @@ export const formatGetVehicle = vehicles => {
       dayPrice: vehicle.day_price,
       weekPrice: vehicle.week_price,
       monthPrice: vehicle.month_price,
-      
     };
   });
 };
+
+export const filterByRange = (vehicles, fromDate, untilDate) => {
+
+  return vehicles.filter(({ rentals }) => {
+    const hasConflict = rentals.some((object) => {
+      const startDate = new Date(object.start_date);
+      const endDate = new Date(object.end_date);
+      return (untilDate >= startDate && untilDate < endDate) ||
+        (fromDate >= startDate && untilDate <= endDate) ||
+        (fromDate >= startDate && fromDate < endDate)
+    })
+
+
+    return !hasConflict;
+  });
+}
 export default mongoose.model('Vehicle', VehicleSchema);

@@ -78,8 +78,7 @@ const RegisterVehicle = () =>{
     }
 
 
-    return(<>
-        <Header />
+    return(
         <Container>
             <div className="import-image">
                 <div className="white-square">
@@ -194,8 +193,7 @@ const RegisterVehicle = () =>{
                 </form>
             </div>
             
-        </Container>
-    </>);
+        </Container>);
 
 }
 

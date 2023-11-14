@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import { createContext, useCallback, useState, useContext } from 'react';
 import api from '../services/api';
 
 const AuthContext = createContext({});
@@ -22,10 +22,7 @@ const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      console.log(await api.post('/sessions', {
-        email,
-        password,
-      }));
+    
       localStorage.setItem('@ManyMiles:token', token);
       localStorage.setItem('@ManyMiles:user', JSON.stringify(user));
   

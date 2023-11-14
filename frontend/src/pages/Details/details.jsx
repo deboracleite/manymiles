@@ -1,77 +1,74 @@
 
+
 import React, { useEffect, useState } from 'react'
 import { json, useParams } from 'react-router-dom'
-import axios from 'axios'
 import api from '../../services/api'
-import Header from '../../components/header/Header'
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
-import {Container} from "./detailsStyle"
+import { Container, Content, HeaderContent, BodyContent, Carousel, RentalInfo } from "./detailsStyle"
+import { useSpring, animated } from 'react-spring';
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useToast } from '../../hooks/toast';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/auth';
+const details = () => {
 
-const details=() => {
-  
-    const params=useParams();
-    const id=params.id;
-    // const [returnVehicle,setReturnVehicle]=useState("");
-    const [vehicleDetails, setVehicleDetails] = useState("");
-    const [fromDate, setFromDate] = useState("");
-    const [untilDate, setUntilDate] = useState("");
-    const [allVehicleDetails,setAllVehicleDetails]=useState("");
-    const [priceWithoutTax, setPriceWithoutTax] = useState(0);
-    const [priceWithTax, setPriceWithTax] = useState(0);
-    
-    useEffect(()=>{
-        api.get(`/fetchDetails/${id}`,{id})
-        .then((res)=>res.data)        
-        .then((data) => {setVehicleDetails(data)})
-        .then((data)=>{console.log(data)})
-    },[id])
-    console.log("debora",vehicleDetails);
-   
-   
-  //  useEffect(()=>{
-  //   api.get('/vehicles')
-  //   .then((res)=>res.data)
-  //   .then((data)=>{setAllVehicleDetails(data)})
-  //   findData();
-  //  },[vehicleDetails]); 
+  const params = useParams();
+  const id = params.id;
+  // const [returnVehicle,setReturnVehicle]=useState("");
+  const [vehicleDetails, setVehicleDetails] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [untilDate, setUntilDate] = useState("");
+  const [allVehicleDetails, setAllVehicleDetails] = useState("");
+  const [priceWithoutTax, setPriceWithoutTax] = useState(0);
+  const [priceWithTax, setPriceWithTax] = useState(0);
+  const [images, setImages] = useState([])
+  const [index, setIndex] = useState(0);
+  const { addToast } = useToast();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-   useEffect(() => {
+  const nextSlide = () => {
+    setIndex((index + 1) % images.length);
+  };
+
+  const prevSlide = () => {
+    setIndex((index - 1 + images.length) % images.length);
+  };
+
+  const props = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    reset: true,
+  });
+
+  useEffect(() => {
+    api.get(`/fetchDetails/${id}`, { id })
+      .then((res) => res.data)
+      .then((data) => {
+        setVehicleDetails(data);
+        setImages(data.photoList)
+      })
+  }, [id])
+
+  useEffect(() => {
     calculatePrice();
   }, [fromDate, untilDate]);
 
-    
-  //  const findData=()=>{
-      
-     
-  //     for(var i=0;i<allVehicleDetails.length;i++){
-  //       // console.log(allVehicleDetails[i].id);
-  //         if(id==allVehicleDetails[i].id){
-  //           // console.log(allVehicleDetails[i]);
-  //           setReturnVehicle(allVehicleDetails[i]);
-  //           // calculatePrice(allVehicleDetails[i]);
-  //         }
-  //     }
-  //  }
 
-   const calculatePrice = () => {
-    console.log("selectedVehicle mario " ,vehicleDetails );
+  const calculatePrice = () => {
     if (fromDate && untilDate) {
       const from = new Date(fromDate);
-      console.log("date from" ,from );
       const until = new Date(untilDate);
-      console.log("date until" ,until );
       const timeDifference = Math.abs(until - from);
       const days = Math.ceil(timeDifference / (1000 * 3600 * 24));
-      console.log("date days" ,days );
-      console.log("selectedVehicle.day_price" ,vehicleDetails.dayPrice);
       const dayPrice = vehicleDetails.dayPrice;
       const weekPrice = vehicleDetails.weekPrice;
       const monthPrice = vehicleDetails.monthPrice;
       const taxRate = 0.13; // Tax rate for Ontario
-  
+
       let totalPrice = 0;
-  
+
       if (days >= 30) {
         totalPrice = monthPrice * (Math.floor(days / 30));
       } else if (days >= 7) {
@@ -79,94 +76,194 @@ const details=() => {
         totalPrice += dayPrice * (days % 7);
       } else {
         totalPrice = dayPrice * days;
-        console.log("dayPrice" ,dayPrice );
-        console.log("totalPrice" ,totalPrice );
       }
-  
+
       const priceWithoutTax = totalPrice;
       const priceWithTax = priceWithoutTax + (priceWithoutTax * taxRate);
-  
+
       setPriceWithoutTax(priceWithoutTax);
       setPriceWithTax(priceWithTax);
     }
   };
-    console.log(vehicleDetails);
-   const handleSubmit = async (e)=>{
-    e.preventDefault();  
-   api.post(`/requestBooking/${vehicleDetails.id}`,
-   {
-    vehicle_id: vehicleDetails.id, 
-    owner_id: vehicleDetails.user_id,
-    start_date: fromDate,
-    end_date: untilDate,
-    vehicle_details: vehicleDetails.description,
-    priceWithoutTax, 
-    priceWithTax
-  });   
-  //  api.post(`/requestBooking/${vehicleDetails._id}`,{vehicleDetails,returnVehicle,fromDate,untilDate,priceWithoutTax, priceWithTax});   
-   
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) {
+      addToast({
+        type: 'info',
+        title: 'Please Sign in before booking',
+      });
+      navigate('/signIn');
+      return;
+    }
+    try {
+      api.post(`/requestBooking/${vehicleDetails.id}`,
+        {
+          vehicle_id: vehicleDetails.id,
+          owner_id: vehicleDetails.id,
+          start_date: fromDate,
+          end_date: untilDate,
+          vehicle_details: vehicleDetails.description,
+          priceWithoutTax,
+          priceWithTax,
+          status: 'pending'
+        });
+
+      addToast({
+        type: 'success',
+        title: 'Booking completed successfully',
+        description: 'Your Booking was successful',
+      });
+      navigate('/')
+    } catch (err) {
+      addToast({
+        type: 'error',
+        title: 'An error occurred when booking',
+      });
+    }
+
   }
-   
+
   return (
-    <>
-    <Header/>
     <Container>
-      <div className='body'>
-          <div className='img_container'>
-            {vehicleDetails!="" && <img src={vehicleDetails.photoList[0].url} className="ImgItem" alt="ImgItem"/>}
-          </div>
-          <div className='informationVehicle'>
-          {vehicleDetails!="" && <h3>Owner Name: {vehicleDetails._doc.first_name+" "+vehicleDetails._doc.last_name}</h3>}
-          {vehicleDetails!="" && <h5>Date Added: {vehicleDetails.date}</h5>}
-            <h1 className='vehicle_brand' >{vehicleDetails.brand} {vehicleDetails.model} {vehicleDetails.year}</h1>
-            <div className='vehicleDetail'>
-              <div className='vehicle_color'>
-                <ColorLensIcon/> 
-                <p > {vehicleDetails.color}</p>
-              </div>
-              <div className='vehicle_fuel'>
-                <LocalGasStationIcon/>
-                <p>{vehicleDetails.fuelType}</p>
+      <Content>
+        <HeaderContent>
+          <h1>{vehicleDetails.brand} {vehicleDetails.model} {vehicleDetails.year}</h1>
+          <p>{vehicleDetails.description}</p>
+        </HeaderContent>
+        <BodyContent>
+          <RentalInfo>
+
+            <div className='vehicleInformation'>
+              <h3>Vehicle Information</h3>
+              <div className='vehicleDetail'>
+                <div className='vehicle_color'>
+                  <ColorLensIcon />
+                  <p > {vehicleDetails.color}</p>
+                </div>
+                <div className='vehicle_fuel'>
+                  <LocalGasStationIcon />
+                  <p>{vehicleDetails.fuelType}</p>
+                </div>
               </div>
             </div>
-            <p className='vehicle_description' >Description: {vehicleDetails.description}</p>
-            <h3>Rent Informations</h3>
-            <div className="line"></div>
-            <div className='rentIformation'>
-              <p>Per Day: ${vehicleDetails.dayPrice}</p>
-              <p>|</p>
-              <p>Per Week: ${vehicleDetails.weekPrice}</p>
-              <p>|</p>
-              <p>Per Month: ${vehicleDetails.monthPrice}</p>
+
+            <div className='rentalInformation'>
+              <h3>Rental Informations</h3>
+
+              <div className='rentInformationDetails'>
+                <div className='rentalPrices'>
+                  <p>Daily: ${vehicleDetails.dayPrice}</p>
+                  <p>|</p>
+                  <p>Weekly: ${vehicleDetails.weekPrice}</p>
+                  <p>|</p>
+                  <p>Monthly: ${vehicleDetails.monthPrice}</p>
+                </div>
+              </div>
+
             </div>
-             <form >
-               <div className="date-input">
+
+            <div className='bookInformation'>
+              <h3>Book Request</h3>
+              <form className='requestBook'>
+                <div className="date-input">
                   <div className="date-input-field">
                     <label>From: </label>
                     <div className="input-container">
-                       <input type="date" placeholder="" onChange={(e)=>{setFromDate(e.target.value); calculatePrice();}} />             
+                      <input type="date" placeholder="" onChange={(e) => { setFromDate(e.target.value); calculatePrice(); }} />
                     </div>
                   </div>
                   <div className="date-input-field">
-                   <label>Until: </label>
+                    <label>Until: </label>
                     <div className="input-container">
-                       <input type="date" placeholder="+1" onChange={(e)=>{setUntilDate(e.target.value); calculatePrice();}}/>
+                      <input type="date" placeholder="+1" onChange={(e) => { setUntilDate(e.target.value); calculatePrice(); }} />
                     </div>
                   </div>
                 </div>
                 <div className="price-details">
+                  <div>
                     <p>Price without tax: ${priceWithoutTax.toFixed(2)}</p>
                     <p>Price with tax (Ontario 13%): ${priceWithTax.toFixed(2)}</p>
-                    <button type="submit" onClick={handleSubmit}>Request booking</button>
+                  </div>
+
+                  <button type="submit" onClick={handleSubmit}>Request booking</button>
                 </div>
-               
-            </form>
-          </div>
+              </form>
+            </div>
+          </RentalInfo>
+          {images.length &&
+            <Carousel>
+              <animated.div style={props}>
+                <img
+                  src={images[index].url}
+                  alt={`Imagem ${index + 1}`}
+                />
+              </animated.div>
+              <div className='control'>
+                <button disabled={index === 0} onClick={prevSlide}><FaArrowLeft size={24} /></button>
+                <button disabled={index === images.length - 1} onClick={nextSlide}><FaArrowRight size={24} /></button>
+              </div>
+
+            </Carousel>}
+        </BodyContent>
+      </Content>
+
+    </Container>)
+
+  {/* <div className='body'>
+{images.length && <div>
+  <h2>Meu Carrossel</h2>
+  <div>
+   
+  </div>
+</div>}
+
+<div className='informationVehicle'>
+  <h1 className='vehicle_brand' >{vehicleDetails.brand} {vehicleDetails.model} {vehicleDetails.year}</h1>
+  <div className='vehicleDetail'>
+    <div className='vehicle_color'>
+      <ColorLensIcon />
+      <p > {vehicleDetails.color}</p>
+    </div>
+    <div className='vehicle_fuel'>
+      <LocalGasStationIcon />
+      <p>{vehicleDetails.fuelType}</p>
+    </div>
+  </div>
+  <p className='vehicle_description' >Description: {vehicleDetails.description}</p>
+  <h3>Rent Informations</h3>
+  <div className="line"></div>
+  <div className='rentIformation'>
+    <p>Per Day: ${vehicleDetails.dayPrice}</p>
+    <p>|</p>
+    <p>Per Week: ${vehicleDetails.weekPrice}</p>
+    <p>|</p>
+    <p>Per Month: ${vehicleDetails.monthPrice}</p>
+  </div>
+  <form >
+    <div className="date-input">
+      <div className="date-input-field">
+        <label>From: </label>
+        <div className="input-container">
+          <input type="date" placeholder="" onChange={(e) => { setFromDate(e.target.value); calculatePrice(); }} />
+        </div>
       </div>
-      
-    </Container>
-    </>    
-  )
+      <div className="date-input-field">
+        <label>Until: </label>
+        <div className="input-container">
+          <input type="date" placeholder="+1" onChange={(e) => { setUntilDate(e.target.value); calculatePrice(); }} />
+        </div>
+      </div>
+    </div>
+    <div className="price-details">
+      <p>Price without tax: ${priceWithoutTax.toFixed(2)}</p>
+      <p>Price with tax (Ontario 13%): ${priceWithTax.toFixed(2)}</p>
+      <button type="submit" onClick={handleSubmit}>Request booking</button>
+    </div>
+  </form>
+</div>
+</div> */}
+
 }
 
 export default details

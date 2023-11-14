@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { animated } from 'react-spring';
 import {
   FiAlertCircle,
   FiCheckCircle,
@@ -30,13 +31,13 @@ const Toast = ({ message, style }) => {
       hasDescription={Number(!!message.description)}
     >
       {icons[message.type || 'info']}
-      <div>
+      <animated.div>
         <strong>{message.title}</strong>
         {message.description && <p>{message.description}</p>}
         <button onClick={() => removeToast(message.id)} type="button">
           <FiXCircle size={18} />
         </button>
-      </div>
+      </animated.div>
     </Container>
   );
 };

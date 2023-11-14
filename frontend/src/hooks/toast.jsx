@@ -8,7 +8,6 @@ const ToastProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const addToast = useCallback(
     ({ title, type, description }) => {
-        console.log({idl: uuidv4()})
       const id = uuidv4();
       const toast = {
         id,

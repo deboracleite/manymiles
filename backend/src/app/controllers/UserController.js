@@ -27,9 +27,9 @@ class UserController {
 
     const user = await parseUser(req.body);
 
-    const { id, first_name, last_name, email } = await User.create(user);
+    const { id, first_name, last_name, email, user_type } = await User.create(user);
 
-    return res.json({ id, first_name, last_name, email });
+    return res.json({ id, first_name, last_name, email, user_type });
   }
 
   async update(req, res) {

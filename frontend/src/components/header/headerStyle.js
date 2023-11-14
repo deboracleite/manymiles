@@ -1,49 +1,62 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const Container = styled.div`
-width: 100%;
-nav{
-    padding-left: 10px;
-    padding-right: 10px;
-}
-.menu-list {
-    padding-left: 100px;
-    padding-right: 100px;
-    display: flex;
-    justify-content: space-between;
-    list-style: none;
-    text-decoration: none;
+export const HeaderContainer = styled.header`
+    padding: 15px;
+    position: relative;
     background-color: #030303;
     height: 70px;
     align-items: center;
-    
-  }
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+`;
 
-.menu-list li {
-    margin: 0 10px;
+export const LeftMenu = styled.div`
+  float: left;
+  display: flex;
+  align-items: center;
+`;
 
-}
+export const RightMenu = styled.div`
+  float: right;
+  display: flex;
+  align-items: center;
+`
 
-.menu-list li.right {
-    margin-left: auto;
-    margin-right: 2%;
-}
-
-#name-logo {
-  font-size: 29px;
-}
-
-.centered {
-  flex: 1; 
-  text-align: center; 
-}
-
-.menu-list a {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-}
+export const CenterLogo = styled.div`
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+`;
 
 
+// export const CenteredContainer = styled.div`
+//     display: flex;
+//     justify-content: center;
+//     position: relative;
+// `;
 
+// export const MenuList = styled.ul`
+//    list-style: none;
+//     padding: 0;
+//     margin: 0;
+//     display: flex;
+//     justify-content: space-between;
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+//     align-items: center;
+// `;
+
+export const MenuItem = styled.a`
+    flex: 0 0 auto;
+`;
+
+export const StyledLink = styled(Link)`
+    color: white;
+    text-decoration: none;
+    padding: 10px;
 `;
