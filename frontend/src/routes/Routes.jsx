@@ -12,7 +12,8 @@ import SignUp from '../pages/SignUp/SignUp';
 
 import RegisterVehicle from '../pages/Registervehicle/RegisterVehicle';
 import Details from '../pages/Details/details';
-import BookingRequest from '../pages/BookingRequests/BookingRequests';
+import BookingRequest from '../pages/BookingRequest/BookingRequest';
+import MyRentals from '../pages/MyRentals/MyRentals';
 import RateExperience from '../pages/RateExperience/RateExperience';
 import Payment from '../pages/Payment/Payment';
 
@@ -36,9 +37,9 @@ const Routes = () => {
       </Route>
       <Route path="/details/:id" element={<Details />} />
 
-      <Route path="/rateExperience" element={<RateExperience />} />
-
-      <Route path="/payment" element={<Payment />} />
+      <Route path="/rateExperience/:rentalRequestId" element={<RateExperience />} />
+      <Route path="/myRentals" element={<MyRentals />} />
+      <Route path="/payment/:id" element={<Payment />} />
     </RouterDOM>
   );
 };

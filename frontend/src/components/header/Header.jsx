@@ -23,7 +23,7 @@ const Header = () => {
                 <MenuItem><StyledLink to="/"><VscHome size={24} /></StyledLink></MenuItem>
                 {user && <MenuItem><StyledLink to="/registerVehicle">{isAdmin ? 'Register Vehicle' : 'Rent Vehicle'}</StyledLink></MenuItem>}
                 {user && <MenuItem><StyledLink to="/bookingRequest">Book Requests</StyledLink></MenuItem>}
-                {user && <MenuItem><StyledLink to="/payment">Payments</StyledLink></MenuItem>}
+                {user && <MenuItem><StyledLink to="/myRentals">My Rentals</StyledLink></MenuItem>}
 
             </LeftMenu>
             <CenterLogo>

@@ -39,11 +39,10 @@ class UserController {
     // const user = await User.findByPk(req.userId);
     const user = await User.findById(req.userId);
 
-    console.log("oiii id", user);
     if (!user) {
       return res.status(400).json({ error: 'User not found.' });
     }
-    
+
     const schema = Yup.object().shape({
       firstName: Yup.string(),
       lastName: Yup.string(),
@@ -56,21 +55,21 @@ class UserController {
         .notRequired(),
     });
 
-   const cleanUpEmpty = (body) => {
-    return Object.entries(body).reduce((acc,[key,value]) => {
-      if(value && isNaN(value)){
-        acc[key] = value;
-      }
-      return acc;
-    }, {});
-   }
+    const cleanUpEmpty = (body) => {
+      return Object.entries(body).reduce((acc, [key, value]) => {
+        if (value && isNaN(value)) {
+          acc[key] = value;
+        }
+        return acc;
+      }, {});
+    }
 
-   const parsedBody = cleanUpEmpty(req.body);
+    const parsedBody = cleanUpEmpty(req.body);
 
     if (!(await schema.isValid(parsedBody))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
-  
+
     if (parsedBody.email !== user.email) {
       const userExist = await User.findOne({
         where: { email: parsedBody.email },
@@ -80,24 +79,24 @@ class UserController {
       }
     }
 
-    
+
     if (parsedBody.password || parsedBody.confirmPassword) {
-      
+
       if (parsedBody.password !== parsedBody.confirmPassword) {
         return res.status(400).json({ error: 'Password and Confirm Password do not match.' });
       }
 
-      
-      
-    } 
+
+
+    }
 
     await user.update(parsedBody);
 
-   
+
     const { _id, name, avatar, email } = await User.findById(req.userId).populate('avatar')
 
-    return res.json({id: _id, name, avatar, email});
-}
+    return res.json({ id: _id, name, avatar, email });
+  }
 
 
   // async update(req, res) {
@@ -130,7 +129,7 @@ class UserController {
   //   // if (oldPassword && !(await user.checkPassword(oldPassword))) {
   //   //   return res.status(401).json({ error: 'Password does not match' });
   //   // }
-    
+
   //   await user.update(req.body);
   //   const { id, name, avatar } = await User.findByPk(req.userId, {
   //     include: [
@@ -177,7 +176,7 @@ class UserController {
   //   if (oldPassword && !(await user.checkPassword(oldPassword))) {
   //     return res.status(401).json({ error: 'Password does not match' });
   //   }
-    
+
   //   await user.update(req.body);
   //   const { id, name, avatar } = await User.findByPk(req.userId, {
   //     include: [
@@ -190,8 +189,8 @@ class UserController {
   //   });
   //   return res.json({ id, name, email, avatar });
   // }
-  async getUser(req, res){
-    const user = await User.findOne({_id: req.userId})
+  async getUser(req, res) {
+    const user = await User.findOne({ _id: req.userId })
     console.log(user)
     return res.json(user);
   }

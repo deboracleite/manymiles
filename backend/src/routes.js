@@ -8,6 +8,7 @@ import authMiddleware from './app/middlewares/auth';
 import OwnerController from './app/controllers/OwnerController';
 import SessionControllerOwner from './app/controllers/SessionControllerOwner';
 import RequestController from './app/controllers/RequestController';
+import PaymentController from './app/controllers/PaymentController';
 
 const routes = new Router();
 
@@ -40,4 +41,11 @@ routes.get('/requestBooking', RequestController.index);
 routes.get('/fetchDetails/:id', VehicleController.fetchDetails);
 
 routes.get('/fetchDetails', RequestController.fetchDetails);
+
+routes.get('/payments', PaymentController.index);
+
+routes.get('/payments/:paymentId', PaymentController.detail);
+
+routes.put('/payments/:paymentId', PaymentController.update);
+
 export default routes;

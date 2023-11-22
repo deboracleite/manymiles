@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import User from '../schemas/User';
+import Payment from '../schemas/Payment';
 import RentalRequest, { parseRentalRequestList } from '../schemas/RentalRequest';
 import Vehicle from '../schemas/Vehicle';
 class RequestController {
@@ -31,9 +32,16 @@ class RequestController {
             return res.status(400).json({ error: 'Vehicle already exists.' });
         }
 
-        const reponse = await RentalRequest.create({ ...req.body, user_id: req.userId, owner_id: req.userId })
+        const { user_id, _id: rental_request_id, priceWithoutTax: amount } = await RentalRequest.create({ ...req.body, user_id: req.userId, owner_id: req.userId })
 
-        return res.json(reponse);
+        const { _id: paymentId } = await Payment.create({
+            status: 'pending',
+            user_id,
+            rental_request_id,
+            amount,
+        })
+
+        return res.json({ paymentId });
     }
 
 

@@ -17,7 +17,7 @@ export const Content = styled.div`
     justify-content: center;
     align-items: center;
     align-content: center;
-`;  
+`;
 
 export const VehicleInfo = styled.div`
     width: 45%;
@@ -57,7 +57,7 @@ export const VehicleRentalInfo = styled.div`
         }
 `
 
-export const TotalRentalInfo =  styled.div`
+export const TotalRentalInfo = styled.div`
     margin-top: 20px;
     width: 100%;
     min-height: 20vh;
@@ -112,7 +112,7 @@ export const IframePaymentContent = styled.div`
         border-radius: 5px;
     }
 
-    input::placeholder {
+    input{
         padding-left: 10px;
     }
 

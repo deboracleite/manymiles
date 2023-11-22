@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import { formatDate, dollarFormat } from '../utils/utils';
 const RentalRequestSchema = new mongoose.Schema(
   {
     start_date: {
@@ -43,27 +43,6 @@ const RentalRequestSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-const formatDate = (dateString) => {
-  const options = {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  };
-
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat('en-US', options).format(date);
-};
-
-const dollarFormat = (valor) => {
-  return valor.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-};
 
 export const parseRentalRequestList = (rentalRequestList) => {
   return rentalRequestList.map(rent => ({

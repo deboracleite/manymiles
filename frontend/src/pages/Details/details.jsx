@@ -97,7 +97,7 @@ const details = () => {
       return;
     }
     try {
-      api.post(`/requestBooking/${vehicleDetails.id}`,
+      const { data: { paymentId } } = await api.post(`/requestBooking/${vehicleDetails.id}`,
         {
           vehicle_id: vehicleDetails.id,
           owner_id: vehicleDetails.id,
@@ -114,7 +114,8 @@ const details = () => {
         title: 'Booking completed successfully',
         description: 'Your Booking was successful',
       });
-      navigate('/')
+
+      navigate(`/payment/${paymentId}`);
     } catch (err) {
       addToast({
         type: 'error',
