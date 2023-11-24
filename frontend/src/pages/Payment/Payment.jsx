@@ -80,7 +80,7 @@ const Payment = () => {
                         title: 'Payment confirmed successfully',
                     });
 
-                    navigate('/payments');
+                    navigate('/myRentals');
                 })
             }).catch((error) => {
                 addToast({

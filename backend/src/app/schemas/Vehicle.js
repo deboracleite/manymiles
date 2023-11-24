@@ -55,9 +55,9 @@ const VehicleSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    owner_id: {
+    user_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Owner',
+      ref: 'User',
     },
     photo_list: [
       {
@@ -85,7 +85,7 @@ export const parseCreateVehicle = vehicleBody => {
     day_price: vehicleBody.dayPrice || 0,
     week_price: vehicleBody.weekPrice || 0,
     month_price: vehicleBody.monthPrice || 0,
-    owner: vehicleBody.ownerId,
+    user_id: vehicleBody.userId,
     photo_list: vehicleBody.photos,
   };
 };

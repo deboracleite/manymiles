@@ -27,7 +27,6 @@ const MyRentals = () => {
 
                         <List>
                             {paymentList.map(payment => {
-                                console.log(payment)
                                 return (
                                     <Card key={payment.id}>
                                         <div className='infoCar'>

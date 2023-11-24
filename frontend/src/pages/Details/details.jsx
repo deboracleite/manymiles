@@ -5,7 +5,7 @@ import { json, useParams } from 'react-router-dom'
 import api from '../../services/api'
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
-import { Container, Content, HeaderContent, BodyContent, Carousel, RentalInfo } from "./detailsStyle"
+import { Container, Content, HeaderContent, BodyContent, Carousel, RentalInfo, ContainerRate, AnimatedCards, Card } from "./detailsStyle"
 import { useSpring, animated } from 'react-spring';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useToast } from '../../hooks/toast';
@@ -36,11 +36,34 @@ const details = () => {
     setIndex((index - 1 + images.length) % images.length);
   };
 
+  const [indexRate, setIndexRate] = useState(0);
+
+  const nextCard = () => {
+    setIndexRate((prevIndex) => (prevIndex + 1) % cards.length);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(nextCard, 5000);
+
+    return () => clearInterval(interval);
+  }, [indexRate]);
+
   const props = useSpring({
     opacity: 1,
     from: { opacity: 0 },
     reset: true,
   });
+
+  const propsRate = useSpring({
+    transform: `translateX(-${indexRate * 100}%)`,
+  });
+
+  const cards = [
+    { id: 1, content: 'Card 1 - Information A' },
+    { id: 2, content: 'Card 2 - Information B' },
+    { id: 3, content: 'Card 3 - Information C' },
+    // Adicione mais cards conforme necessário
+  ];
 
   useEffect(() => {
     api.get(`/fetchDetails/${id}`, { id })
@@ -204,67 +227,23 @@ const details = () => {
                 <button disabled={index === 0} onClick={prevSlide}><FaArrowLeft size={24} /></button>
                 <button disabled={index === images.length - 1} onClick={nextSlide}><FaArrowRight size={24} /></button>
               </div>
-
             </Carousel>}
         </BodyContent>
+        <ContainerRate>
+          <AnimatedCards style={propsRate}>
+            {cards.map((card) => (
+              <Card key={card.id}>
+                <span>
+                  {card.content}
+                </span>
+
+              </Card>
+            ))}
+          </AnimatedCards>
+        </ContainerRate>
       </Content>
 
     </Container>)
-
-  {/* <div className='body'>
-{images.length && <div>
-  <h2>Meu Carrossel</h2>
-  <div>
-   
-  </div>
-</div>}
-
-<div className='informationVehicle'>
-  <h1 className='vehicle_brand' >{vehicleDetails.brand} {vehicleDetails.model} {vehicleDetails.year}</h1>
-  <div className='vehicleDetail'>
-    <div className='vehicle_color'>
-      <ColorLensIcon />
-      <p > {vehicleDetails.color}</p>
-    </div>
-    <div className='vehicle_fuel'>
-      <LocalGasStationIcon />
-      <p>{vehicleDetails.fuelType}</p>
-    </div>
-  </div>
-  <p className='vehicle_description' >Description: {vehicleDetails.description}</p>
-  <h3>Rent Informations</h3>
-  <div className="line"></div>
-  <div className='rentIformation'>
-    <p>Per Day: ${vehicleDetails.dayPrice}</p>
-    <p>|</p>
-    <p>Per Week: ${vehicleDetails.weekPrice}</p>
-    <p>|</p>
-    <p>Per Month: ${vehicleDetails.monthPrice}</p>
-  </div>
-  <form >
-    <div className="date-input">
-      <div className="date-input-field">
-        <label>From: </label>
-        <div className="input-container">
-          <input type="date" placeholder="" onChange={(e) => { setFromDate(e.target.value); calculatePrice(); }} />
-        </div>
-      </div>
-      <div className="date-input-field">
-        <label>Until: </label>
-        <div className="input-container">
-          <input type="date" placeholder="+1" onChange={(e) => { setUntilDate(e.target.value); calculatePrice(); }} />
-        </div>
-      </div>
-    </div>
-    <div className="price-details">
-      <p>Price without tax: ${priceWithoutTax.toFixed(2)}</p>
-      <p>Price with tax (Ontario 13%): ${priceWithTax.toFixed(2)}</p>
-      <button type="submit" onClick={handleSubmit}>Request booking</button>
-    </div>
-  </form>
-</div>
-</div> */}
-
 }
 
 export default details

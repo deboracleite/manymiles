@@ -12,12 +12,13 @@ import SignUp from '../pages/SignUp/SignUp';
 
 import RegisterVehicle from '../pages/Registervehicle/RegisterVehicle';
 import Details from '../pages/Details/details';
-import BookingRequest from '../pages/BookingRequest/BookingRequest';
+import BookingRequest from '../pages/BookingRequests/BookingRequests';
 import MyRentals from '../pages/MyRentals/MyRentals';
 import RateExperience from '../pages/RateExperience/RateExperience';
 import Payment from '../pages/Payment/Payment';
 
 import MyAccount from '../pages/MyAccount/MyAccount'
+import VehicleHistory from '../pages/VehicleHistory/VehicleHistory';
 
 const Routes = () => {
   return (
@@ -39,6 +40,7 @@ const Routes = () => {
 
       <Route path="/rateExperience/:rentalRequestId" element={<RateExperience />} />
       <Route path="/myRentals" element={<MyRentals />} />
+      <Route path="/vehicleHistory" element={<VehicleHistory />} />
       <Route path="/payment/:id" element={<Payment />} />
     </RouterDOM>
   );

@@ -80,9 +80,9 @@ const Home = () => {
             </ContainerJourney>
             <ContainerVehicle>
                 <ul className='vehicleList'>
-                    {vehicleList.length && vehicleList.map(vehicle => (
+                    {vehicleList.length ? vehicleList.map(vehicle => (
                         <VehicleCard key={vehicle.id} className="vehicleItem" vehicle={vehicle} />
-                    ))}
+                    )) : <></>}
                 </ul>
 
             </ContainerVehicle>

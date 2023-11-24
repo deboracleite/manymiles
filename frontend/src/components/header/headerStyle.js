@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.header`
@@ -53,6 +53,12 @@ export const CenterLogo = styled.div`
 
 export const MenuItem = styled.a`
     flex: 0 0 auto;
+  
+    ${(props) => props.menu && css`
+    
+      border-bottom: 1px solid #fff;
+      padding-bottom: 4px;
+    `}
 `;
 
 export const StyledLink = styled(Link)`

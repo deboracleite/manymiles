@@ -54,5 +54,17 @@ export const parseRentalRequestList = (rentalRequestList) => {
   }))
 }
 
+export const parseRentalRequest = (rental) => {
+  return {
+    brand: rental.vehicle_id.brand,
+    model: rental.vehicle_id.model,
+    year: rental.vehicle_id.year,
+    from: formatDate(rental.start_date),
+    until: formatDate(rental.end_date),
+    price: dollarFormat(rental.priceWithTax),
+    vehicleId: rental.vehicle_id._id,
+    rentalRequestId: rental._id
+  }
+}
 
 export default mongoose.model('RentalRequest', RentalRequestSchema);

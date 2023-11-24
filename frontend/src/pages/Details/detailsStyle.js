@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { animated } from 'react-spring';
 export const Container = styled.div`
     width: 90%;
     min-height: 92vh;
@@ -9,7 +9,7 @@ export const Container = styled.div`
     justify-content: center;
     margin: 0 auto;
     color: #000;
-    
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 `;
 
 export const Content = styled.div`
@@ -153,5 +153,39 @@ export const RentalInfo = styled.div`
             cursor: pointer;
         }
     }
+`;
+
+export const ContainerRate = styled.div`
+  overflow: hidden;
+  margin-top: 5vh;
+  width: 100%;
+  
+`;
+
+export const AnimatedCards = styled(animated.div)`
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+`;
+
+export const Card = styled.div`
+    
+  min-width: 100%;
+  /* margin: 10px 10px; */
+ 
+  min-height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span{
+    display: inline-block;
+    
+    width: 90%;
+    min-height: 15vh;
+    padding: 20px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
 `;
 
