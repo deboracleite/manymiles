@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import RobotoRegular from "../assets/fonts/Roboto/Roboto-Regular.woff";
 
-
 export default createGlobalStyle`
   * {
     margin: 0;
