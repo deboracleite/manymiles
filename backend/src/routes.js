@@ -53,4 +53,6 @@ routes.put('/payments/:paymentId', PaymentController.update);
 
 routes.post(`/rates`, RateController.store);
 
+routes.get(`/rates/:vehicleId`, RateController.index);
+
 export default routes;

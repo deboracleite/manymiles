@@ -15,21 +15,37 @@ const SignIn = () => {
 
     const handleSubmit = async event => {
         event.preventDefault();
-        const schema = Yup.object().shape({
-            email: Yup.string().required('You must have an email').email('Type a valid email!'),
-            password: Yup.string().required('You must have a password!')
-        })
+        try {
+            const schema = Yup.object().shape({
+                email: Yup.string().required('You must have an email').email('Type a valid email!'),
+                password: Yup.string().required('You must have a password!')
+            })
 
-        await schema.validate({ email, password });
+            if (!await schema.validate({ email, password })) {
+                addToast({
+                    type: 'error',
+                    title: 'Failed to Authenticate1',
+                    description: 'Invalid user try again',
+                });
+                return;
+            }
 
 
-        await signIn({ email, password });
-        addToast({
-            type: 'success',
-            title: 'Authentication Success',
-            description: 'The user has been successfully authenticated',
-        });
-        navigate('/');
+            await signIn({ email, password });
+            addToast({
+                type: 'success',
+                title: 'Authentication Success',
+                description: 'The user has been successfully authenticated',
+            });
+            navigate('/');
+        } catch (error) {
+            addToast({
+                type: 'error',
+                title: 'Failed to Authenticate',
+                description: 'Invalid user try again ',
+            });
+        }
+
     }
 
     return (

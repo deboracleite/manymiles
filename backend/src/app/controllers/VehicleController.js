@@ -128,7 +128,6 @@ class VehicleController {
 
   async fetchDetails(req, res) {
 
-    console.log(req.params.id);
     const vehicles = await Vehicle.findById(req.params.id).populate('photo_list');
 
     return res.json(formatGetVehicle([vehicles])[0]);

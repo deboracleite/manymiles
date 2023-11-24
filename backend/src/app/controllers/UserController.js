@@ -33,10 +33,6 @@ class UserController {
   }
 
   async update(req, res) {
-
-    console.log(req.body);
-
-    // const user = await User.findByPk(req.userId);
     const user = await User.findById(req.userId);
 
     if (!user) {
@@ -99,99 +95,10 @@ class UserController {
   }
 
 
-  // async update(req, res) {
-  //   console.log("oiii");
-  //   const schema = Yup.object().shape({
-  //     firstName: Yup.string(),
-  //     lastName: Yup.string(),
-  //     email: Yup.string().email(),
-  //     password: Yup.string().min(6),
-  //     confirmPassword: Yup.string().when('password', (password, field) =>
-  //       password ? field.required().oneOf([Yup.ref('password')]) : field
-  //     ),
-  //   });
 
-  //   if (!(await schema.isValid(req.body))) {
-  //     return res.status(400).json({ error: 'Validation fails' });
-  //   }
-  //   const { email } = req.body;
-  //   const user = await User.findByPk(req.userId);
-
-  //   if (email !== user.email) {
-  //     const userExist = await User.findOne({
-  //       where: { email },
-  //     });
-  //     if (userExist) {
-  //       return res.status(400).json({ error: 'User already exists.' });
-  //     }
-  //   }
-
-  //   // if (oldPassword && !(await user.checkPassword(oldPassword))) {
-  //   //   return res.status(401).json({ error: 'Password does not match' });
-  //   // }
-
-  //   await user.update(req.body);
-  //   const { id, name, avatar } = await User.findByPk(req.userId, {
-  //     include: [
-  //       {
-  //         model: File,
-  //         as: 'avatar',
-  //         attributes: ['id', 'path', 'url'],
-  //       },
-  //     ],
-  //   });
-  //   return res.json({ id, name, email, avatar });
-  // }
-
-  // async update(req, res) {
-  //   console.log("oiii");
-  //   const schema = Yup.object().shape({
-  //     firstName: Yup.string(),
-  //     lastName: Yup.string(),
-  //     email: Yup.string().email(),
-  //     oldPassword: Yup.string().min(6),
-  //     password: Yup.string()
-  //       .min(6)
-  //       .when('oldPassword', (oldPassword, field) =>
-  //         oldPassword ? field.required() : field
-  //       ),
-  //     confirmPassword: Yup.string().when('password', (password, field) =>
-  //       password ? field.required().oneOf([Yup.ref('password')]) : field
-  //     ),
-  //   });
-  //   if (!(await schema.isValid(req.body))) {
-  //     return res.status(400).json({ error: 'Validation fails' });
-  //   }
-  //   const { email, oldPassword } = req.body;
-  //   const user = await User.findByPk(req.userId);
-  //   if (email !== user.email) {
-  //     const userExist = await User.findOne({
-  //       where: { email },
-  //     });
-  //     if (userExist) {
-  //       return res.status(400).json({ error: 'User already exists.' });
-  //     }
-  //   }
-
-  //   if (oldPassword && !(await user.checkPassword(oldPassword))) {
-  //     return res.status(401).json({ error: 'Password does not match' });
-  //   }
-
-  //   await user.update(req.body);
-  //   const { id, name, avatar } = await User.findByPk(req.userId, {
-  //     include: [
-  //       {
-  //         model: File,
-  //         as: 'avatar',
-  //         attributes: ['id', 'path', 'url'],
-  //       },
-  //     ],
-  //   });
-  //   return res.json({ id, name, email, avatar });
-  // }
   async getUser(req, res) {
     const user = await User.findOne({ _id: req.userId })
-    console.log(user)
+
     return res.json(user);
   }
 }

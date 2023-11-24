@@ -54,7 +54,8 @@ export const parsePaymentList = (paymentList) => {
         from: formatDate(payment.rental_request_id.start_date),
         until: formatDate(payment.rental_request_id.end_date),
         price: dollarFormat(payment.rental_request_id.priceWithTax),
-        rentalRequestId: payment.rental_request_id._id
+        rentalRequestId: payment.rental_request_id._id,
+        hasRate: payment.hasRate
       }
     }
   })

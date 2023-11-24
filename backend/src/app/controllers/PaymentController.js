@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import User, { validateUserPassword } from '../schemas/User';
 import authConfig from '../../config/auth';
 import Payment, { parsePaymentList, parsePaymentDetail } from '../schemas/Payment';
-
+import Rate from '../schemas/Rate';
 class PaymentController {
 
     async index(req, res) {
@@ -15,7 +15,15 @@ class PaymentController {
 
         const requests = await Payment.find({ user_id: req.userId }).populate({ path: 'rental_request_id', populate: { path: 'vehicle_id' } });
 
-        return res.json(parsePaymentList(requests));
+        const paymentsParsed = await Promise.all(requests.map(async (payment) => {
+            const hasRate = await Rate.exists({ rental_request_id: payment.rental_request_id._id })
+            return {
+                ...payment._doc,
+                hasRate: !!hasRate
+            }
+        }))
+
+        return res.json(parsePaymentList(paymentsParsed));
     }
 
     async detail(req, res) {

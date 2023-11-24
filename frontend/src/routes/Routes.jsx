@@ -12,7 +12,7 @@ import SignUp from '../pages/SignUp/SignUp';
 
 import RegisterVehicle from '../pages/Registervehicle/RegisterVehicle';
 import Details from '../pages/Details/details';
-import BookingRequest from '../pages/BookingRequests/BookingRequests';
+import BookingRequest from '../pages/BookingRequest/BookingRequest';
 import MyRentals from '../pages/MyRentals/MyRentals';
 import RateExperience from '../pages/RateExperience/RateExperience';
 import Payment from '../pages/Payment/Payment';

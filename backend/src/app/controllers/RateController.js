@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import Rate from '../schemas/Rate';
+import Rate, { parseRateList } from '../schemas/Rate';
 
 class RateController {
     async store(req, res) {
@@ -19,6 +19,14 @@ class RateController {
         const { _id: rate_id } = await Rate.create({ ...req.body, user_id: req.userId })
 
         return res.json({ rate_id });
+    }
+
+    async index(req, res) {
+        const { vehicleId } = req.params;
+
+        const rates = await Rate.find({ vehicle_id: vehicleId }).populate('rental_request_id').populate('user_id')
+
+        return res.json(parseRateList(rates));
     }
 }
 

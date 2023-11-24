@@ -26,7 +26,7 @@ const Home = () => {
         return !(!fromDate || !untilDate || (new Date(fromDate) > new Date(untilDate)) || new Date(fromDate) < new Date())
     }
 
-    const handleSearch = useCallback(() => {
+    const handleSearch = () => {
 
         if (!validateDateRange()) {
             addToast({
@@ -44,7 +44,7 @@ const Home = () => {
                 untilDate
             }
         }).then(({ data }) => setVehicleList(data ?? []));
-    }, [fromDate, untilDate])
+    }
 
     useEffect(() => {
         api.get('vehicles').then(({ data }) => setVehicleList(data ?? []));

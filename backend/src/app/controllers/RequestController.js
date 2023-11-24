@@ -46,17 +46,19 @@ class RequestController {
 
 
     async index(req, res) {
+
         const userId = await User.findOne({ _id: req.userId })
 
         if (!userId) {
             res.status(401).json({ error: 'User not found' });
         }
 
-        const requests = await RentalRequest.find({ status: 'pending' })
+        const requests = (await RentalRequest.find({ status: 'pending' })
             .populate({
                 path: 'vehicle_id',
                 match: { user_id: req.userId },
-            });
+            })).filter(request => request.vehicle_id !== null);
+
 
         const arrayOfIds = requests.map(el => el._id);
 

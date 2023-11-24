@@ -43,8 +43,8 @@ const MyRentals = () => {
                                                 {checkStatus(payment.status) ? 'Pending' : 'Paid'}
                                             </button>
 
-                                            {!checkStatus(payment.status) && <button className={'pendingButton'} onClick={() => navigate(`/rateExperience/${payment.booking.rentalRequestId}`)}>
-                                                Rate
+                                            {!checkStatus(payment.status) && <button className={payment.booking.hasRate ? 'paidButton' : 'pendingButton'} onClick={() => navigate(`/rateExperience/${payment.booking.rentalRequestId}`)}>
+                                                {payment.booking.hasRate ? 'Rated' : 'Rate'}
                                             </button>}
                                         </div>
                                     </Card>

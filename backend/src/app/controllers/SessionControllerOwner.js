@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import * as Yup from 'yup';
-import  Owner, { validateOwnerPassword } from '../schemas/Owner';
+import Owner, { validateOwnerPassword } from '../schemas/Owner';
 import authConfig from '../../config/auth';
 
 class SessionControllerOwner {
@@ -16,7 +16,7 @@ class SessionControllerOwner {
     }
     const { email, password } = req.body;
     const owner = await Owner.findOne({ email });
-    console.log("Here");
+
     if (!owner) {
       res.status(401).json({ error: 'User not found' });
     }

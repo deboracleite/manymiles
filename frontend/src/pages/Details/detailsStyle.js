@@ -176,7 +176,11 @@ export const Card = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  span{
+  
+`;
+
+
+export const CardContent = styled.div`
     display: inline-block;
     
     width: 90%;
@@ -186,6 +190,43 @@ export const Card = styled.div`
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+
+    display: flex;
+
+`
+
+export const InfoContainer = styled.div`
+    width: 20%;
+    min-height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+`
+
+
+export const Profile = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
 `;
 
+export const DateRental = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+`;
+export const FeedBack = styled.div`
+    width: 80%;
+    min-height: 10vh;
+    border-radius: 10px;
+    border: 1px solid #000;
+    overflow-y: scroll;
+    p{
+        margin: 15px 0px 0px 15px;
+    }
+`;

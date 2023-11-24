@@ -31,30 +31,10 @@ export const CenterLogo = styled.div`
 `;
 
 
-// export const CenteredContainer = styled.div`
-//     display: flex;
-//     justify-content: center;
-//     position: relative;
-// `;
-
-// export const MenuList = styled.ul`
-//    list-style: none;
-//     padding: 0;
-//     margin: 0;
-//     display: flex;
-//     justify-content: space-between;
-//     position: absolute;
-//     left: 0;
-//     right: 0;
-//     top: 0;
-//     bottom: 0;
-//     align-items: center;
-// `;
-
-export const MenuItem = styled.a`
+export const MenuItem = styled.p`
     flex: 0 0 auto;
   
-    ${(props) => props.menu && css`
+    ${({ $menu }) => ($menu === 'true' ?? false) && css`
     
       border-bottom: 1px solid #fff;
       padding-bottom: 4px;

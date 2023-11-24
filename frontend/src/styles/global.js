@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import RobotoRegular from "../assets/fonts/Roboto/Roboto-Regular.ttf";
+import RobotoRegular from "../assets/fonts/Roboto/Roboto-Regular.woff";
 
 
 export default createGlobalStyle`
@@ -33,6 +33,6 @@ export default createGlobalStyle`
 
   @font-face {
   font-family: "RobotoRegular";
-  src: url({RobotoRegular}) format('truetype');
+  src: url(${RobotoRegular}) format('truetype');
 }
 `;

@@ -9,8 +9,7 @@ const RequestsList = ({ request }) => {
 
   useEffect(() => {
     api.get(`/fetchDetails/${id}`, { id })
-      .then((res) => res.data)
-      .then((data) => { setVehicleDetails(data), console.log(data) })
+      .then(({ data }) => setVehicleDetails(data))
   }, [id])
 
   return (

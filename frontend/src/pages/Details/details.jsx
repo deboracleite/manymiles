@@ -1,25 +1,27 @@
 
 
-import React, { useEffect, useState } from 'react'
-import { json, useParams } from 'react-router-dom'
+import React, { useCallback, useEffect, useState } from 'react'
+import { BiLike, BiDislike } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import Rating from 'react-rating-stars-component';
+import { useParams } from 'react-router-dom'
 import api from '../../services/api'
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
-import { Container, Content, HeaderContent, BodyContent, Carousel, RentalInfo, ContainerRate, AnimatedCards, Card } from "./detailsStyle"
+import { Container, Content, HeaderContent, BodyContent, Carousel, RentalInfo, ContainerRate, AnimatedCards, Card, CardContent, InfoContainer, Profile, DateRental, FeedBack } from "./detailsStyle"
 import { useSpring, animated } from 'react-spring';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useToast } from '../../hooks/toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
+
 const details = () => {
 
   const params = useParams();
   const id = params.id;
-  // const [returnVehicle,setReturnVehicle]=useState("");
   const [vehicleDetails, setVehicleDetails] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [untilDate, setUntilDate] = useState("");
-  const [allVehicleDetails, setAllVehicleDetails] = useState("");
   const [priceWithoutTax, setPriceWithoutTax] = useState(0);
   const [priceWithTax, setPriceWithTax] = useState(0);
   const [images, setImages] = useState([])
@@ -27,7 +29,7 @@ const details = () => {
   const { addToast } = useToast();
   const navigate = useNavigate();
   const { user } = useAuth();
-
+  const [rates, setRates] = useState([]);
   const nextSlide = () => {
     setIndex((index + 1) % images.length);
   };
@@ -39,14 +41,14 @@ const details = () => {
   const [indexRate, setIndexRate] = useState(0);
 
   const nextCard = () => {
-    setIndexRate((prevIndex) => (prevIndex + 1) % cards.length);
+    setIndexRate((prevIndex) => (prevIndex + 1) % rates.length);
   };
 
   useEffect(() => {
     const interval = setInterval(nextCard, 5000);
 
     return () => clearInterval(interval);
-  }, [indexRate]);
+  }, [indexRate, rates]);
 
   const props = useSpring({
     opacity: 1,
@@ -58,12 +60,9 @@ const details = () => {
     transform: `translateX(-${indexRate * 100}%)`,
   });
 
-  const cards = [
-    { id: 1, content: 'Card 1 - Information A' },
-    { id: 2, content: 'Card 2 - Information B' },
-    { id: 3, content: 'Card 3 - Information C' },
-    // Adicione mais cards conforme necessário
-  ];
+  useEffect(() => {
+    api.get(`/rates/${id}`).then(({ data }) => setRates(data))
+  }, []);
 
   useEffect(() => {
     api.get(`/fetchDetails/${id}`, { id })
@@ -229,18 +228,46 @@ const details = () => {
               </div>
             </Carousel>}
         </BodyContent>
-        <ContainerRate>
+        {rates.length && <ContainerRate>
           <AnimatedCards style={propsRate}>
-            {cards.map((card) => (
-              <Card key={card.id}>
-                <span>
-                  {card.content}
-                </span>
+            {rates.map((rate) => (
+              <Card key={rate.id}>
+                <CardContent>
+                  <InfoContainer>
+                    <Profile>
+                      <CgProfile size={24} />
+                      <h3>{rate.userName}</h3>
+                      {rate.enjoy ?
+                        <BiLike color={'#00c853'} size={24} />
+                        :
+                        <BiDislike color={'#d50000'} size={24} />
+                      }
+                    </Profile>
+                    <DateRental>
+                      <p><span>From: {rate.from} </span></p>
+                      <p><span>Until: {rate.until} </span></p>
+                    </DateRental>
+                    <Rating
+                      count={5}
+                      value={rate.rate}
+                      size={24}
+                      isHalf={false}
+                      edit={false}
+                      activeColor="#ffd700"
+                    />
+                  </InfoContainer>
+
+                  <FeedBack>
+                    <p>{rate.feedback}</p>
+                  </FeedBack>
+
+
+                </CardContent>
 
               </Card>
             ))}
           </AnimatedCards>
-        </ContainerRate>
+        </ContainerRate>}
       </Content>
 
     </Container>)

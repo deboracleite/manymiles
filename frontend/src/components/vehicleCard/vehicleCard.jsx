@@ -13,7 +13,7 @@ const VehicleCard = ({ vehicle }) => {
                     <Link to={`/details/${vehicle.id}`}>{vehicle.model}</Link>
                 </div>
                 <div className="itemPrice">
-                    <h6>Hourly Rate: {vehicle.hourPrice}</h6>
+                    <h6>Daily Rate: {vehicle.dayPrice}</h6>
                 </div>
                 <div className="moreDetails">
                     {/* <Link to={`/details/${vehicle.id}`}>More Details</Link> */}

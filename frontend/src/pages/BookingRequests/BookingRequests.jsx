@@ -12,7 +12,7 @@ const BookingRequest = () => {
         setBookingList(newBookingList);
     }
 
-    const handleDecision = useCallback(async (bookingId, decision, bookingList) => {
+    const handleDecision = async (bookingId, decision, bookingList) => {
         try {
             await api.put(`/requestBooking/${bookingId}`, { decision });
             addToast({
@@ -28,12 +28,15 @@ const BookingRequest = () => {
                 title: 'Failure to record your decision',
             });
         }
-    }, [])
+    }
 
 
     useEffect(() => {
+
         api.get(`/requestBooking`)
-            .then(({ data }) => setBookingList(data))
+            .then(({ data }) => {
+                setBookingList(data)
+            })
 
     }, [])
     return (
