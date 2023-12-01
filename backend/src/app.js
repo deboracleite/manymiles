@@ -18,6 +18,8 @@ class App {
   }
 
   middlewares() {
+    this.server.use(express.static(path.join(__dirname, 'public')));
+
     this.server.use(cors());
     this.server.use(express.json());
     this.server.use(
