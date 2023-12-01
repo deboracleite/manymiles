@@ -5,8 +5,6 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import VehicleController from './app/controllers/VehicleController';
 import authMiddleware from './app/middlewares/auth';
-import OwnerController from './app/controllers/OwnerController';
-import SessionControllerOwner from './app/controllers/SessionControllerOwner';
 import RequestController from './app/controllers/RequestController';
 import PaymentController from './app/controllers/PaymentController';
 import RateController from './app/controllers/RateController';
@@ -17,11 +15,7 @@ const upload = multer(multerConfig);
 
 routes.post('/users', UserController.store);
 
-routes.post('/owners', OwnerController.store);
-
 routes.post('/sessions', SessionController.store);
-
-routes.post('/sessionsOwner', SessionControllerOwner.store);
 
 routes.get('/vehicles', VehicleController.index);
 

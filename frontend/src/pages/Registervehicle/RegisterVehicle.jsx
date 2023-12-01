@@ -177,11 +177,11 @@ const RegisterVehicle = () => {
                                 <input type="time" placeholder="DD-MM-YYY" />
                             </div>
                     </div> */}
-                        <div className="Availability-toggle">
+                        {/* <div className="Availability-toggle">
                             <label>Availability:</label>
                             <input type="checkbox" id="availability-toggle" onChange={handleAvailabilityToggle} checked={availability} />
                             <label htmlFor="availability-toggle" className="toggle"></label>
-                        </div>
+                        </div> */}
                         <div className="Description-inputs">
                             <label>Vehicle Description:</label>
                             <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} ></textarea>

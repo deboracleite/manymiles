@@ -38,7 +38,7 @@ const Home = () => {
         }
 
 
-        api.get('vehicles', {
+        api.get('/vehicles', {
             params: {
                 fromDate,
                 untilDate
@@ -47,7 +47,7 @@ const Home = () => {
     }
 
     useEffect(() => {
-        api.get('vehicles').then(({ data }) => setVehicleList(data ?? []));
+        api.get('/vehicles').then(({ data }) => setVehicleList(data ?? []));
     }, []);
 
     return (

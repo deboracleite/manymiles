@@ -38,7 +38,7 @@ class VehicleController {
       return res.status(400).json({ error: 'Vehicle already exists.' });
     }
 
-    const photos = await File.insertMany(req.files.map(parseFile));
+    const photos = req.files ? await File.insertMany(req.files.map(parseFile)) : [];
 
     const vehicle = await Vehicle.create(
       parseCreateVehicle({ ...req.body, userId: req.userId, photos })
@@ -49,7 +49,7 @@ class VehicleController {
 
   async index(req, res) {
     const { fromDate, untilDate } = req.query;
-
+console.log({fromDate, untilDate})
     const vehicles = await Vehicle.aggregate([
       {
         $lookup: {
@@ -119,12 +119,11 @@ class VehicleController {
     }, [])
 
     const hasValidFilter = !isNaN(new Date(fromDate)) || !isNaN(new Date(untilDate));
-
+    console.log({hasValidFilter})
     const filteredVehicleList = hasValidFilter ? filterByRange(groupVehicles, new Date(fromDate), new Date(untilDate)) : groupVehicles;
+    console.log({filteredVehicleList})
     return res.json(formatGetVehicle(filteredVehicleList));
   }
-
-
 
   async fetchDetails(req, res) {
 
@@ -133,8 +132,6 @@ class VehicleController {
     return res.json(formatGetVehicle([vehicles])[0]);
 
   }
-
-
 }
 
 export default new VehicleController();

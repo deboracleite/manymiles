@@ -94,8 +94,6 @@ class UserController {
     return res.json({ id: _id, name, avatar, email });
   }
 
-
-
   async getUser(req, res) {
     const user = await User.findOne({ _id: req.userId })
 

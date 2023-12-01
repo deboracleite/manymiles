@@ -44,7 +44,6 @@ class RequestController {
         return res.json({ paymentId });
     }
 
-
     async index(req, res) {
 
         const userId = await User.findOne({ _id: req.userId })

@@ -130,8 +130,9 @@ export const formatGetVehicle = vehicles => {
 };
 
 export const filterByRange = (vehicles, fromDate, untilDate) => {
-
   return vehicles.filter(({ rentals }) => {
+    const validRentals =  rentals.filter(el => !!el);
+    if(!validRentals.length) return true;
     const hasConflict = rentals.some((object) => {
       const startDate = new Date(object.start_date);
       const endDate = new Date(object.end_date);
